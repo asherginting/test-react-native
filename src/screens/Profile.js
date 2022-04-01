@@ -1,12 +1,10 @@
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Image, Text} from 'native-base';
-import {useNavigation} from '@react-navigation/native';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
 
-const ProfileScreen = () => {
-  const navigation = useNavigation();
+const Profile = ({navigation}) => {
   return (
     <View style={styles.main}>
       <View style={styles.header}>
@@ -18,7 +16,7 @@ const ProfileScreen = () => {
           alt="Photo profile"
         />
         <Text bold fontSize="2xl" style={styles.name}>
-          Asher Ginting
+          Asher Azriel Ginting
         </Text>
       </View>
       <View style={styles.container}>
@@ -86,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default Profile;
