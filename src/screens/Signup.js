@@ -1,16 +1,10 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, } from 'react-native';
 import React from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import {useState} from 'react/cjs/react.development';
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const [text, setText] = useState({text: ''});
   const handleChange = key => {
     if (/^\d+$/.test(key)) {
@@ -20,7 +14,7 @@ const Signup = () => {
   return (
     <View>
       <ImageBackground
-        source={require('../img/bgSignup.jpg')}
+        source={require('../assets/img/bgSignup.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>
@@ -35,7 +29,6 @@ const Signup = () => {
               placeholder="Phone Number"
               keyboardType="numeric"
               onChangeText={handleChange}
-              value={text}
             />
             <View style={styles.gap} />
             <Input placeholder="Password" secureTextEntry={true} />
@@ -44,7 +37,9 @@ const Signup = () => {
             </View>
             <View style={styles.loginContain}>
               <Text style={styles.login}>Already have account?</Text>
-              <Text style={[styles.login, styles.linklogin]}> Login now</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={[styles.login, styles.linklogin]}> Login now</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -53,13 +48,12 @@ const Signup = () => {
   );
 };
 
-let ScreenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   image: {
-    height: ScreenHeight,
+    height: '100%',
   },
   opacity: {
-    height: ScreenHeight,
+    height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     padding: 20,
     flexDirection: 'column',
@@ -93,6 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
     marginBottom: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   ['login']: {
     color: '#fff',
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
   linklogin: {
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    width: 74,
+    width: 80,
     fontWeight: 'bold',
   },
 });
