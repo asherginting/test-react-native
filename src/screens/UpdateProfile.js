@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 0,
     right: 140,
-    backgroundColor: '#49BEB7',
+    backgroundColor: '#0085DF',
     padding: 9,
     borderRadius: 50,
   },
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   },
   textRadio: {
     marginLeft: 8,
+    color: '#0085DF',
   },
   label: {
     color: 'gray',
