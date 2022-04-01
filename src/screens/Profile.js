@@ -12,7 +12,7 @@ const Profile = ({navigation}) => {
           size={69}
           resizeMode={'contain'}
           borderRadius={200}
-          source={require('../assets/imgDummy/user.jpg')}
+          source={require('../assets/img/user.jpg')}
           alt="Photo profile"
         />
         <Text bold fontSize="2xl" style={styles.name}>

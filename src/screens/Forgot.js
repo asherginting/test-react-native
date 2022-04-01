@@ -8,7 +8,7 @@ const Forgot = ({navigation: {goBack}}) => {
   return (
     <View>
       <ImageBackground
-        source={require('../assets/img/bgForgot.jpg')}
+        source={require('../assets/img/bg-forgot.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>

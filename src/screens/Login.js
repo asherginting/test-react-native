@@ -8,7 +8,7 @@ const Login = ({navigation}) => {
   return (
     <View>
       <ImageBackground
-        source={require('../assets/img/bg-login')}
+        source={require('../assets/img/bg-login.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>

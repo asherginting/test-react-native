@@ -35,7 +35,7 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 size={99}
                 resizeMode={'contain'}
                 borderRadius={200}
-                source={require('../assets/imgDummy/user.jpg')}
+                source={require('../assets/img/user.jpg')}
                 alt="Photo profile"
               />
             </Center>

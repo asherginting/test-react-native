@@ -14,7 +14,7 @@ const Signup = ({navigation}) => {
   return (
     <View>
       <ImageBackground
-        source={require('../assets/img/bgSignup.jpg')}
+        source={require('../assets/img/bg-signup.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>
