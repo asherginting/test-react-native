@@ -1,26 +1,16 @@
-import {
-  View,
-  Text,
-  TextInput,
-  ImageBackground,
-  StyleSheet,
-  FlatList,
-  Image,
-  ScrollView,
-} from 'react-native';
+import { View, Text, TextInput, ImageBackground, StyleSheet, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {Container, Center} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const dataProduct = [
-    {image: require('../img/car.jpg'), text: 'test'},
-    {image: require('../img/motor.jpg'), text: 'test'},
-    {image: require('../img/scoter.jpg'), text: 'test'},
-    {image: require('../img/motor.jpg'), text: 'test'},
-    {image: require('../img/car.jpg'), text: 'test'},
-    {image: require('../img/motor.jpg'), text: 'test'},
+    {image: require('../assets/img/car.jpg'), text: 'test'},
+    {image: require('../assets/img/motor.jpg'), text: 'test'},
+    {image: require('../assets/img/scoter.jpg'), text: 'test'},
+    {image: require('../assets/img/motor.jpg'), text: 'test'},
+    {image: require('../assets/img/car.jpg'), text: 'test'},
+    {image: require('../assets/img/motor.jpg'), text: 'test'},
   ];
   const typeProduct = ['Cars', 'Motorbike', 'Bike'];
 
@@ -45,10 +35,12 @@ const Home = () => {
             <View style={styles.wrapperProduct} key={index}>
               <View style={styles.topProduct}>
                 <Text style={styles.type}>{data}</Text>
-                <View style={styles.more}>
+                <TouchableOpacity
+                  style={styles.more}
+                  onPress={() => navigation.navigate('DetailCategory')}>
                   <Text>View More</Text>
                   <Icon2 name="navigate-next" size={20} />
-                </View>
+                </TouchableOpacity>
               </View>
               <View>
                 <FlatList
