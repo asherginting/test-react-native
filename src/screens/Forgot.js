@@ -1,28 +1,22 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ImageBackground,
-} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableWithoutFeedback, TouchableOpacity, } from 'react-native';
 import React from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const Forgot = () => {
+const Forgot = ({navigation: {goBack}}) => {
   return (
     <View>
       <ImageBackground
-        source={require('../img/bgForgot.jpg')}
+        source={require('../assets/img/bgForgot.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>
           <View style={styles.header}>
-            <View style={styles.back}>
+            <TouchableOpacity style={styles.back} onPress={() => goBack()}>
               <Icon style={[styles.text, styles.icon]} name="left" size={25} />
               <Text style={[styles.text, styles.textBack]}> Back</Text>
-            </View>
+            </TouchableOpacity>
             <Text style={styles.head}>THAT'S OKAY,</Text>
             <Text style={styles.head}>WE GOT YOUR BACK</Text>
           </View>
@@ -30,7 +24,11 @@ const Forgot = () => {
             <Text style={[styles.text, styles.textForm]}>
               Enter your email to get reset password code
             </Text>
-            <Input placeholder="Enter your email address" />
+            <ScrollView>
+              <TouchableWithoutFeedback>
+                <Input placeholder="Enter your email address" />
+              </TouchableWithoutFeedback>
+            </ScrollView>
             <View style={[styles.btn, styles.sendCode]}>
               <Button color="primary">Send Code</Button>
             </View>
@@ -44,13 +42,13 @@ const Forgot = () => {
   );
 };
 
-let ScreenHeight = Dimensions.get('window').height;
+// let ScreenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   image: {
-    height: ScreenHeight,
+    height: '100%',
   },
   opacity: {
-    height: ScreenHeight,
+    height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     padding: 20,
     flexDirection: 'column',
