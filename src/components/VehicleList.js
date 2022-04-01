@@ -20,7 +20,7 @@ const VehicleList = ({image, name, seet, stock, price, ...set}) => {
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
-          colors={['#01a3a4', '#49BEB7', '#32DBC6']}
+          colors={['#0085DF', '#39A1E7', '#0085DF']}
           style={styles.rate}>
           <Text bold color="white" fontSize={'md'}>
             4.5
@@ -40,7 +40,7 @@ const VehicleList = ({image, name, seet, stock, price, ...set}) => {
               {stock} bikes left
             </Text>
           ) : (
-            <Text bold color="#49BEB7">
+            <Text bold color="#0085DF">
               Available
             </Text>
           )}
