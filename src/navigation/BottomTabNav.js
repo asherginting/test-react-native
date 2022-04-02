@@ -30,13 +30,13 @@ const BottomTabNav = () => {
             icon = 'home';
             color = focused ? '#0085DF' : '#8395a7';
           } else if (routeName === historyRoute) {
-            icon = 'sticky-note';
+            icon = 'history';
             color = focused ? '#0085DF' : '#8395a7';
           } else if (routeName === chatRoute) {
-            icon = 'comment';
+            icon = 'comments-o';
             color = focused ? '#0085DF' : '#8395a7';
           } else if (routeName === profileRoute) {
-            icon = 'user';
+            icon = 'user-circle-o';
             color = focused ? '#0085DF' : '#8395a7';
           }
           return <FaIcon name={icon} size={size} color={color} />;
