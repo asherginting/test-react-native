@@ -27,7 +27,7 @@ const Home = ({navigation}) => {
               placeholderTextColor="#fff"
               placeholder="Search Vehicle"
             />
-            <Icon name="search" size={20} style={styles.searchIcon} />
+            <Icon name="search" size={22} style={styles.searchIcon} />
           </View>
         </ImageBackground>
         {typeProduct.map((data, index) => {
@@ -38,8 +38,8 @@ const Home = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.more}
                   onPress={() => navigation.navigate('DetailCategory')}>
-                  <Text>View More</Text>
-                  <Icon2 name="navigate-next" size={20} />
+                  <Text style={styles.viewMore}>View More</Text>
+                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
                 </TouchableOpacity>
               </View>
               <View>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: 'rgba(34, 47, 62,0.6)',
     borderRadius: 10,
-    fontSize: 20,
+    fontSize: 14,
     paddingHorizontal: 15,
   },
   searchIcon: {
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
   },
   type: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 22,
+    color: '#393939',
   },
   more: {
     flexDirection: 'row',
@@ -118,6 +119,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
   },
+  viewMore: {
+    color: '#0085DF'
+  }
 });
 
 export default Home;
