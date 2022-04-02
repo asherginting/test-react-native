@@ -193,7 +193,7 @@ const Order = ({navigation}) => {
           <Box mt={'25'}>
             <Button
               color="primary"
-              onPress={() => navigation.navigate('PaymentForm')}>
+              onPress={() => navigation.navigate('Payment')}>
               Reservation
             </Button>
           </Box>
