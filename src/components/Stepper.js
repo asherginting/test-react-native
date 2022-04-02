@@ -53,7 +53,7 @@ const Stepper = ({currentlyActive, count = 3}) => {
                 end={{x: 1, y: 0}}
                 colors={
                   currentlyActive - 1 >= index + 1
-                    ? ['#01a3a4', '#49BEB7', '#32DBC6']
+                    ? ['#0085DF', '#39A1E7', '#0085DF']
                     : ['#DFDEDE', '#DFDEDE']
                 }
                 style={styles.line}
@@ -69,7 +69,7 @@ const Stepper = ({currentlyActive, count = 3}) => {
               end={{x: 1, y: 0}}
               colors={
                 currentlyActive >= index + 1
-                  ? ['#01a3a4', '#49BEB7', '#32DBC6']
+                  ? ['#0085DF', '#39A1E7', '#0085DF']
                   : ['#DFDEDE', '#DFDEDE']
               }
               style={styles.item}>

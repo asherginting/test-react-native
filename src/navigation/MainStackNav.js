@@ -7,6 +7,10 @@ import Faq from '../screens/Faq';
 import Help from '../screens/Help';
 import UpdateProfile from '../screens/UpdateProfile';
 import Order from '../screens/Order';
+import Payment from '../screens/Payment';
+import Payment2 from '../screens/Payment2';
+import Payment3 from '../screens/Payment3';
+import PaymentFinish from '../screens/PaymentFinish';
 
 
 const MainStack = createNativeStackNavigator();
@@ -22,6 +26,10 @@ const MainStackNav = () => {
       <MainStack.Screen name="Help" component={Help} />
       <MainStack.Screen name="UpdateProfile" component={UpdateProfile} />
       <MainStack.Screen name="Order" component={Order} />
+      <MainStack.Screen name="Payment" component={Payment} />
+      <MainStack.Screen name="Payment2" component={Payment2} />
+      <MainStack.Screen name="Payment3" component={Payment3} />
+      <MainStack.Screen name="PaymentFinish" component={PaymentFinish} />
     </MainStack.Navigator>
   );
 };
