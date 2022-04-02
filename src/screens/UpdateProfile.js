@@ -56,11 +56,11 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 space={4}
                 w="75%"
                 maxW="300px">
-                <Radio value="1" my={1}>
-                  <Text style={styles.textRadio}>Female</Text>
-                </Radio>
-                <Radio value="2" my={1}>
+                <Radio colorScheme='blue' value="1" my={1} >
                   <Text style={styles.textRadio}>Male</Text>
+                </Radio>
+                <Radio colorScheme='blue' value="2" my={1}>
+                  <Text style={styles.textRadio}>Female</Text>
                 </Radio>
               </Stack>
             </Radio.Group>
@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
   },
   textRadio: {
     marginLeft: 8,
-    color: '#0085DF',
   },
   label: {
     color: 'gray',
