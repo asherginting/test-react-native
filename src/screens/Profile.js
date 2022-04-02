@@ -9,39 +9,39 @@ const Profile = ({navigation}) => {
     <View style={styles.main}>
       <View style={styles.header}>
         <Image
-          size={69}
+          size={60}
           resizeMode={'contain'}
           borderRadius={200}
           source={require('../assets/img/user.jpg')}
           alt="Photo profile"
         />
-        <Text bold fontSize="2xl" style={styles.name}>
+        <Text bold style={styles.name}>
           Asher Azriel Ginting
         </Text>
       </View>
       <View style={styles.container}>
         <View>
-          <TouchableOpacity style={styles.linkItem}>
-            <Text fontSize="2xl">Your favourites</Text>
-            <FaIcon name="chevron-right" size={25} />
+          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Favorite')}>
+            <Text fontSize="xl">Your favourites</Text>
+            <FaIcon name="chevron-right" size={18} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkItem}>
-            <Text fontSize="2xl">FAQ</Text>
-            <FaIcon name="chevron-right" size={25} />
+          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Faq')}>
+            <Text fontSize="xl">FAQ</Text>
+            <FaIcon name="chevron-right" size={18} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkItem}>
-            <Text fontSize="2xl">Help</Text>
-            <FaIcon name="chevron-right" size={25} />
+          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Help')}>
+            <Text fontSize="xl">Help</Text>
+            <FaIcon name="chevron-right" size={18} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.linkItem}
             onPress={() => navigation.navigate('UpdateProfile')}>
-            <Text fontSize="2xl">Update profile</Text>
-            <FaIcon name="chevron-right" size={25} />
+            <Text fontSize="xl">Update profile</Text>
+            <FaIcon name="chevron-right" size={18} />
           </TouchableOpacity>
         </View>
         <View style={styles.btnWrapper}>
-          <Button color="primary">Log out</Button>
+          <Button color="primary">LOGOUT</Button>
         </View>
       </View>
     </View>
@@ -68,7 +68,10 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   name: {
-    marginLeft: 30,
+    marginLeft: 28,
+    fontWeight: 'bold',
+    fontSize: 22,
+    color: '#393939',
   },
   list: {
     paddingVertical: 20,
