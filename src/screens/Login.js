@@ -1,10 +1,32 @@
-import {View, Text, StyleSheet, ImageBackground,TouchableOpacity,
-} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, ImageBackground,TouchableOpacity,} from 'react-native';
+import React, {useState, useEffect } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { authLogin } from '../redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = ({navigation}) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [isError, setISError] = useState();
+
+  const dispatch = useDispatch();
+  const {auth} = useSelector(state => state);
+  useEffect(() => {
+    dispatch({
+      type: 'AUTH_CLEAR_ERR',
+    });
+  }, [dispatch]);
+
+  const handleLogin = () => {
+    if (username && password) {
+      setIsError(false);
+      dispatch(authLogin(username, password));
+    } else {
+      setIsError(true);
+    }
+  };
+
   return (
     <View>
       <ImageBackground
@@ -17,16 +39,28 @@ const Login = ({navigation}) => {
             <Text style={styles.head}>THE WORLD</Text>
           </View>
           <View style={styles.form}>
-            <Input placeholder="Email" />
+            {(isError || auth.isError) && (
+              <Text
+                color={'danger.700'}
+                style={styles.message}
+                py="2"
+                my="7"
+                textAlign={'center'}
+                fontSize="xl"
+                bold>
+                {auth.isError ? auth.errMessage : 'Empty username or password'}
+              </Text>
+            )}
+            <Input placeholder="Username" onChangeText={setUsername} value={username}/>
             <View style={styles.gap} />
-            <Input placeholder="Password" secureTextEntry={true} />
+            <Input placeholder="Password" secureTextEntry={true} onChangeText={setPassword} value={password} />
             <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
               <Text style={styles.forgot}>Forgot Password?</Text>
             </TouchableOpacity>
             <View style={styles.btn}>
               <Button
                 color="primary"
-                onPress={() => navigation.navigate('Home')}>
+                onPress={handleLogin}>
                 Login
               </Button>
             </View>
@@ -68,6 +102,10 @@ const styles = StyleSheet.create({
   },
   form: {
     bottom: 0,
+  },
+  message: {
+    backgroundColor: 'rgba(15, 185, 177,0.7)',
+    borderRadius: 10,
   },
   gap: {
     marginTop: 20,

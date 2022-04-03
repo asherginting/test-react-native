@@ -1,10 +1,61 @@
 import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableWithoutFeedback, TouchableOpacity, } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+// import {Text} from 'native-base';
+import {Box} from 'native-base';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useDispatch, useSelector} from 'react-redux';
+import {forgotPwd, verifyPwd} from '../redux/actions/forgot';
 
-const Forgot = ({navigation: {goBack}}) => {
+const Forgot = ({navigation}) => {
+  const [email, setEmail] = useState();
+  const [code, setCode] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [isEmpty, setIsEmpty] = useState();
+  const [checkPwd, setCheckPwd] = useState(true);
+
+  const {forgot} = useSelector(state => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'FORGOT_CLEAR_ALL',
+    });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (forgot.isSuccess) {
+      navigation.navigate('Login');
+    }
+  }, [forgot]);
+
+  const handleSend = () => {
+    if (email) {
+      setIsEmpty(false);
+      dispatch(forgotPwd(email));
+    } else {
+      setIsEmpty(true);
+    }
+  };
+
+  const confrimPwd = () => {
+    if (code && password && confirmPassword) {
+      setIsEmpty(false);
+      if (password === confirmPassword) {
+        setCheckPwd(true);
+        dispatch(verifyPwd(email, code, password, confirmPassword));
+      } else {
+        setCheckPwd(false);
+      }
+    } else {
+      setIsEmpty(true);
+    }
+  };
+
+
   return (
     <View>
       <ImageBackground
@@ -13,29 +64,98 @@ const Forgot = ({navigation: {goBack}}) => {
         style={styles.image}>
         <View style={styles.opacity}>
           <View style={styles.header}>
-            <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+            <TouchableOpacity style={styles.back} onPress={() => navigation.navigate('Login')}>
               <Icon style={[styles.text, styles.icon]} name="left" size={25} />
               <Text style={[styles.text, styles.textBack]}> Back</Text>
             </TouchableOpacity>
             <Text style={styles.head}>THAT'S OKAY,</Text>
             <Text style={styles.head}>WE GOT YOUR BACK</Text>
           </View>
+          {!forgot.isCodeSend ? (
           <View style={styles.form}>
             <Text style={[styles.text, styles.textForm]}>
               Enter your email to get reset password code
             </Text>
+            {(isEmpty || forgot.isError) && (
+                <Text
+                  color={'danger.700'}
+                  style={styles.message}
+                  py="2"
+                  my="7"
+                  textAlign={'center'}
+                  fontSize="xl"
+                  bold>
+                  {forgot.isError ? forgot.errMessage : 'Data must be filled'}
+                </Text>
+            )}
             <ScrollView>
-              <TouchableWithoutFeedback>
-                <Input placeholder="Enter your email address" />
-              </TouchableWithoutFeedback>
+              <Box py="5">
+                <Input placeholder="Enter your email address" keyboardType="email-address" onChangeText={setEmail} value={email} />
+              </Box>
             </ScrollView>
             <View style={[styles.btn, styles.sendCode]}>
-              <Button color="primary">Send Code</Button>
+              <Button color="primary" onPress={handleSend}>Send Code</Button>
             </View>
             <View style={[styles.btn, styles.resend]}>
-              <Button color="secondary">Resend Code</Button>
+              <Button color="secondary" onPress={handleSend}>Resend Code</Button>
             </View>
           </View>
+          ) : (
+            <>
+              <ScrollView style={styles.secondForm}>
+                {(isEmpty || forgot.isError || !checkPwd) && (
+                  <Text
+                    color={'danger.600'}
+                    style={styles.message}
+                    py="2"
+                    my="7"
+                    textAlign={'center'}
+                    fontSize="xl"
+                    bold>
+                    {(!checkPwd &&
+                      'The password confirmation does not match') ||
+                      (forgot.isError
+                        ? forgot.errMessage
+                        : 'Data must be filled')}
+                  </Text>
+                )}
+                <Box py="5">
+                  <Input
+                    onChangeText={setCode}
+                    value={code}
+                    keyboardType="numeric"
+                    placeholder="Enter your Code"
+                  />
+                </Box>
+                <Box py="5">
+                  <Input
+                    onChangeText={setPassword}
+                    value={password}
+                    secureTextEntry={true}
+                    placeholder="Enter your New Password"
+                  />
+                </Box>
+                <Box py="5">
+                  <Input
+                    onChangeText={setConfirmPassword}
+                    value={confirmPassword}
+                    secureTextEntry={true}
+                    placeholder="Enter your Confirm Password"
+                  />
+                </Box>
+                <View style={[styles.btn, styles.sendCode]}>
+                  <Button color="primary" onPress={confrimPwd}>
+                    Change Password
+                  </Button>
+                </View>
+                <View style={[styles.btn, styles.resend]}>
+                  <Button color="secondary" onPress={handleSend}>
+                    Resend Code
+                  </Button>
+                </View>
+              </ScrollView>
+            </>
+          )}
         </View>
       </ImageBackground>
     </View>
@@ -78,6 +198,13 @@ const styles = StyleSheet.create({
   },
   form: {
     bottom: 0,
+  },
+  message: {
+    backgroundColor: 'rgba(15, 185, 177,0.9)',
+    borderRadius: 10,
+  },
+  secondForm: {
+    marginTop: 120,
   },
   textForm: {
     textAlign: 'center',
