@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Login = ({navigation}) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [isError, setISError] = useState();
+  const [isError, setIsError] = useState();
 
   const dispatch = useDispatch();
   const {auth} = useSelector(state => state);
@@ -41,14 +41,9 @@ const Login = ({navigation}) => {
           <View style={styles.form}>
             {(isError || auth.isError) && (
               <Text
-                color={'danger.700'}
                 style={styles.message}
-                py="2"
-                my="7"
-                textAlign={'center'}
-                fontSize="xl"
                 bold>
-                {auth.isError ? auth.errMessage : 'Empty username or password'}
+                {auth.isError ? auth.errMessage : 'Empty Username or Password!'}
               </Text>
             )}
             <Input placeholder="Username" onChangeText={setUsername} value={username}/>
@@ -104,8 +99,12 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   message: {
-    backgroundColor: 'rgba(15, 185, 177,0.7)',
+    // backgroundColor: '#0085DF',
+    color: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
+    marginBottom: 20,
   },
   gap: {
     marginTop: 20,
