@@ -6,7 +6,7 @@ export const verify = (username, code, password) => {
     try {
       const input = {username, code, password};
       const {data} = await http().post(
-        '/auth/verification',
+        '/auth/confrimRegistration',
         qs.stringify(input),
       );
       dispatch({

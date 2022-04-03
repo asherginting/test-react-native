@@ -42,7 +42,7 @@ const Signup = ({navigation}) => {
   };
   
   return (
-    <View>
+    <ScrollView>
       <ImageBackground
         source={require('../assets/img/bg-signup.jpg')}
         resizeMode="cover"
@@ -55,11 +55,7 @@ const Signup = ({navigation}) => {
           <View style={styles.form}>
             {(isEmpty || signup.isError) && (
               <Text
-                color={'danger.700'}
                 style={styles.message}
-                py="2"
-                my="7"
-                textAlign={'center'}
                 fontSize="xl"
                 bold>
                 {signup.isError ? signup.errMessage : 'All data must be filled'}
@@ -94,7 +90,7 @@ const Signup = ({navigation}) => {
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -121,8 +117,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   message: {
-    backgroundColor: 'rgba(15, 185, 177,0.7)',
+    // backgroundColor: 'rgba(15, 185, 177,0.7)',
+    color: 'white',
     borderRadius: 10,
+    marginBottom: 20,
   },
   gap: {
     marginTop: 20,
