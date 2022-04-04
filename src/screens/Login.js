@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   message: {
     // backgroundColor: '#0085DF',
-    color: 'red',
+    color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,

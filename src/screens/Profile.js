@@ -20,11 +20,11 @@ const Profile = ({navigation}) => {
           size={60}
           resizeMode={'contain'}
           borderRadius={200}
-          source={require('../assets/img/user.jpg')}
+          source={require('../assets/img/no-pp.jpg')}
           alt="Photo profile"
         />
         <Text bold style={styles.name}>
-          Asher Azriel Ginting
+          Example
         </Text>
       </View>
       <View style={styles.container}>

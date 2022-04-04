@@ -11,8 +11,9 @@ import {
   import priceFormat from '../helper/priceFormat';
   import Rate from '../components/Rate';
   import Button from '../components/Button';
+import { NavigationContainer } from '@react-navigation/native';
   
-  const PaymentFinish = () => {
+  const PaymentFinish = ({navigation}) => {
     const vehicle = {
       name: 'Toyota Avanza',
       seet: 5,
@@ -87,7 +88,7 @@ import {
             <Text py={'1'}>{customer.address}</Text>
           </Box>
           <Box my="10">
-            <Button color="primary">Total: {priceFormat(customer.total)}</Button>
+            <Button color="primary" onPress={() => navigation.navigate('Home')}>Total: {priceFormat(customer.total) }</Button>
           </Box>
           <Box mb="20" />
         </ScrollView>
