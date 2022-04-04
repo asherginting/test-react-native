@@ -8,13 +8,13 @@ import priceFormat from '../helper/priceFormat';
 
 const Payment3 = ({navigation}) => {
   const dataOrder = {
-    qty: 2,
-    name: 'Vespa',
+    qty: 1,
+    name: 'Toyota Avanza',
     perpayment: 'no tax',
-    days: 4,
-    startDate: 'April 7 2022',
-    endDate: 'April 11 2022',
-    price: 20000,
+    days: 1,
+    startDate: 'April 4 2022',
+    endDate: 'April 5 2022',
+    price: 300000,
   };
   return (
     <Box p="5">
@@ -50,7 +50,7 @@ const Payment3 = ({navigation}) => {
           0290-90203-345-2
           </Text>
           <Text fontSize="md" color="gray.500" bold>
-            Vespa Rental Jogja
+            Go - Rental
           </Text>
           <Box py="5" style={styles.borderBtm} />
           <Text fontSize={'md'} pt="5" bold>
@@ -59,7 +59,7 @@ const Payment3 = ({navigation}) => {
               VSP901222
             </Text>
           </Text>
-          <Text>Use your booking code to pick your vespa</Text>
+          <Text>Use your booking code to pick your cars</Text>
           <Box py="5">
             <Button color={'primary'}>
               Copy payment & Booking Code

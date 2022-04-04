@@ -36,13 +36,13 @@ const LocationSection = ({address, icon}) => {
 
 const Order = ({navigation}) => {
   const data = {
-    image: require('../assets/img/motor.jpg'),
+    image: require('../assets/img/avanza.jpeg'),
     rate: 4,
-    brand: 'Vespa Matic',
-    price: 12000,
-    seet: 2,
+    brand: 'Toyota Avanza',
+    price: 300000,
+    seet: 5,
     prepayment: false,
-    stock: 8,
+    stock: 3,
     address: 'Jalan Malioboro, No 24, Yogyakarta',
   };
 
