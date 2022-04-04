@@ -53,26 +53,26 @@ const Verify = ({navigation}) => {
               <Text style={[styles.text, styles.textBack]}> Back</Text>
             </TouchableOpacity>
             <Text fontSize="4xl" style={styles.head}>
-              Verification
+              Verification Code
             </Text>
-            <Text fontSize="4xl" style={styles.head}>
+            {/* <Text fontSize="4xl" style={styles.head}>
               Code
-            </Text>
+            </Text> */}
           </View>
           <View style={styles.form}>
-            <Text style={[styles.text, styles.textForm]}>Enter your code</Text>
+            <Text style={[styles.text, styles.textForm]}>Enter your code Verification</Text>
             {(isEmpty || verifyState.isError) && (
               <Text
                 style={styles.message}
                 textAlign={'center'}
-                fontSize="xl"
+                fontSize="md"
                 bold>
                 {verifyState.isError
                   ? verifyState.errMessage
-                  : 'All data must be filled'}
+                  : 'All data must be filled!'}
               </Text>
             )}
-            <Box my="5">
+            <Box my="2">
               <Input
                 placeholder="Enter your code"
                 onChangeText={setCode}
@@ -80,14 +80,14 @@ const Verify = ({navigation}) => {
                 keyboardType="number-pad"
               />
             </Box>
-            <Box my="5">
+            <Box my="2">
               <Input
                 placeholder="Enter your username"
                 onChangeText={setUsername}
                 value={username}
               />
             </Box>
-            <Box my="5">
+            <Box my="2">
               <Input
                 onChangeText={setPassword}
                 value={password}
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   message: {
     // backgroundColor: 'rgba(15, 185, 177,0.7)',
     color: 'white',
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   textForm: {
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 5,
   },
   btn: {
     marginTop: 10,

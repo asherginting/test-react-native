@@ -78,7 +78,6 @@ const Forgot = ({navigation}) => {
             </Text>
             {(isEmpty || forgot.isError) && (
                 <Text
-                  color={'danger.700'}
                   style={styles.message}
                   py="2"
                   my="7"
@@ -110,13 +109,13 @@ const Forgot = ({navigation}) => {
                     py="2"
                     my="7"
                     textAlign={'center'}
-                    fontSize="xl"
+                    fontSize="md"
                     bold>
                     {(!checkPwd &&
-                      'The password confirmation does not match') ||
+                      'The password confirmation does not match!') ||
                       (forgot.isError
                         ? forgot.errMessage
-                        : 'Data must be filled')}
+                        : 'Data must be filled!')}
                   </Text>
                 )}
                 <Box py="5">
@@ -200,8 +199,9 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   message: {
-    backgroundColor: 'rgba(15, 185, 177,0.9)',
-    borderRadius: 10,
+    // backgroundColor: 'rgba(15, 185, 177,0.9)',
+    // borderRadius: 10,
+    color: 'white'
   },
   secondForm: {
     marginTop: 120,

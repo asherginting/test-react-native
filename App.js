@@ -11,11 +11,12 @@ import AuthStackNav from './src/navigation/AuthStackNav';
 import Forgot from './src/screens/Forgot';
 
 const Main = () => {
-  const {auth} = useSelector(state => state);
+  // const {auth} = useSelector(state => state);
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        {auth.token ? <MainStackNav /> : <AuthStackNav />}
+        {/* {auth.token ? <MainStackNav /> : <AuthStackNav />} */}
+        <Forgot/>
       </NativeBaseProvider>
     </NavigationContainer>
   );
