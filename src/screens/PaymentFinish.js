@@ -11,27 +11,28 @@ import {
   import priceFormat from '../helper/priceFormat';
   import Rate from '../components/Rate';
   import Button from '../components/Button';
+import { NavigationContainer } from '@react-navigation/native';
   
-  const PaymentFinish = () => {
+  const PaymentFinish = ({navigation}) => {
     const vehicle = {
-      name: 'Vespa Matic',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/scoter.jpg'),
+      name: 'Toyota Avanza',
+      seet: 5,
+      stock: 5,
+      price: 300000,
+      image: require('../assets/img/avanza.jpeg'),
       rating: 4.5,
-      qty: 2,
-      days: 4,
-      startDate: 'April 7 2022',
-      endDate: 'April 11 2022',
+      qty: 1,
+      days: 1,
+      startDate: 'April 4 2022',
+      endDate: 'April 5 2022',
     };
     const customer = {
       id: 13454,
-      name: 'Alexander Grahambel',
+      name: 'Budi Susanto',
       phone: '089234543',
       address: 'Jakarta, Indonesia',
-      email: 'alexander@mail.com',
-      total: 245000,
+      email: 'budisus@mail.com',
+      total: 300000,
     };
     return (
       <Box p="5">
@@ -87,7 +88,7 @@ import {
             <Text py={'1'}>{customer.address}</Text>
           </Box>
           <Box my="10">
-            <Button color="primary">Total: {priceFormat(customer.total)}</Button>
+            <Button color="primary" onPress={() => navigation.navigate('Home')}>Total: {priceFormat(customer.total) }</Button>
           </Box>
           <Box mb="20" />
         </ScrollView>

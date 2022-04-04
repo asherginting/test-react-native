@@ -1,10 +1,32 @@
-import {View, Text, StyleSheet, ImageBackground,TouchableOpacity,
-} from 'react-native';
-import React from 'react';
+import {View, Text, StyleSheet, ImageBackground,TouchableOpacity,} from 'react-native';
+import React, {useState, useEffect } from 'react';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { authLogin } from '../redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = ({navigation}) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [isError, setIsError] = useState();
+
+  const dispatch = useDispatch();
+  const {auth} = useSelector(state => state);
+  useEffect(() => {
+    dispatch({
+      type: 'AUTH_CLEAR_ERR',
+    });
+  }, [dispatch]);
+
+  const handleLogin = () => {
+    if (username && password) {
+      setIsError(false);
+      dispatch(authLogin(username, password));
+    } else {
+      setIsError(true);
+    }
+  };
+
   return (
     <View>
       <ImageBackground
@@ -17,16 +39,23 @@ const Login = ({navigation}) => {
             <Text style={styles.head}>THE WORLD</Text>
           </View>
           <View style={styles.form}>
-            <Input placeholder="Email" />
+            {(isError || auth.isError) && (
+              <Text
+                style={styles.message}
+                bold>
+                {auth.isError ? auth.errMessage : 'Empty Username or Password!'}
+              </Text>
+            )}
+            <Input placeholder="Username" onChangeText={setUsername} value={username}/>
             <View style={styles.gap} />
-            <Input placeholder="Password" secureTextEntry={true} />
+            <Input placeholder="Password" secureTextEntry={true} onChangeText={setPassword} value={password} />
             <TouchableOpacity onPress={() => navigation.navigate('Forgot')}>
               <Text style={styles.forgot}>Forgot Password?</Text>
             </TouchableOpacity>
             <View style={styles.btn}>
               <Button
                 color="primary"
-                onPress={() => navigation.navigate('Home')}>
+                onPress={handleLogin}>
                 Login
               </Button>
             </View>
@@ -68,6 +97,14 @@ const styles = StyleSheet.create({
   },
   form: {
     bottom: 0,
+  },
+  message: {
+    // backgroundColor: '#0085DF',
+    color: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginBottom: 20,
   },
   gap: {
     marginTop: 20,

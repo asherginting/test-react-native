@@ -4,15 +4,26 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
 const Home = ({navigation}) => {
-  const dataProduct = [
-    {image: require('../assets/img/car.jpg'), text: 'test'},
-    {image: require('../assets/img/motor.jpg'), text: 'test'},
-    {image: require('../assets/img/scoter.jpg'), text: 'test'},
-    {image: require('../assets/img/motor.jpg'), text: 'test'},
-    {image: require('../assets/img/car.jpg'), text: 'test'},
-    {image: require('../assets/img/motor.jpg'), text: 'test'},
+  const cars = [
+    {image: require('../assets/img/avanza.jpeg'), text: 'test'},
+    {image: require('../assets/img/xenia.jpg'), text: 'test'},
+    {image: require('../assets/img/mazda.png'), text: 'test'},
   ];
-  const typeProduct = ['Cars', 'Motorbike', 'Bike'];
+
+  const motobike = [
+    {image: require('../assets/img/beat.jpg'), text: 'test'},
+    {image: require('../assets/img/vario.jpg'), text: 'test'},
+    {image: require('../assets/img/satriafu.jpg'), text: 'test'},
+  ];
+
+  const bike = [
+    {image: require('../assets/img/polygon.jpg'), text: 'test'},
+    {image: require('../assets/img/onthel.jpg'), text: 'test'},
+    {image: require('../assets/img/polygon2.jpeg'), text: 'test'},
+  ];
+  const typeProduct = ['Cars',];
+  const typeProduct2 = ['Motorbike'];
+  const typeProduct3 = ['Bike'];
 
   return (
     <View>
@@ -44,7 +55,69 @@ const Home = ({navigation}) => {
               </View>
               <View>
                 <FlatList
-                  data={dataProduct}
+                  data={cars}
+                  horizontal={true}
+                  style={styles.flat}
+                  renderItem={({item}) => {
+                    return (
+                      <ImageBackground
+                        source={item.image}
+                        style={styles.imgProduct}
+                        resizeMode="cover"
+                      />
+                    );
+                  }}
+                />
+              </View>
+            </View>
+          );
+        })}
+        {typeProduct2.map((data, index) => {
+          return (
+            <View style={styles.wrapperProduct} key={index}>
+              <View style={styles.topProduct}>
+                <Text style={styles.type}>{data}</Text>
+                <TouchableOpacity
+                  style={styles.more}
+                  onPress={() => navigation.navigate('DetailCategory')}>
+                  <Text style={styles.viewMore}>View More</Text>
+                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <FlatList
+                  data={motobike}
+                  horizontal={true}
+                  style={styles.flat}
+                  renderItem={({item}) => {
+                    return (
+                      <ImageBackground
+                        source={item.image}
+                        style={styles.imgProduct}
+                        resizeMode="cover"
+                      />
+                    );
+                  }}
+                />
+              </View>
+            </View>
+          );
+        })}
+        {typeProduct3.map((data, index) => {
+          return (
+            <View style={styles.wrapperProduct} key={index}>
+              <View style={styles.topProduct}>
+                <Text style={styles.type}>{data}</Text>
+                <TouchableOpacity
+                  style={styles.more}
+                  onPress={() => navigation.navigate('DetailCategory')}>
+                  <Text style={styles.viewMore}>View More</Text>
+                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
+                </TouchableOpacity>
+              </View>
+              <View>
+                <FlatList
+                  data={bike}
                   horizontal={true}
                   style={styles.flat}
                   renderItem={({item}) => {

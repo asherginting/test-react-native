@@ -7,8 +7,8 @@ import Button from '../components/Button';
 
 const UpdateProfile = ({navigation: {goBack}}) => {
   const dataInput = [
-    {label: 'Name', value: 'Asher Azriel Ginting'},
-    {label: 'Email Address', value: 'asher@mail.com', type: 'email-address'},
+    {label: 'Name', value: 'Example'},
+    {label: 'Email Address', value: 'example@mail.com', type: 'email-address'},
     {label: 'Phone Number', value: '08123456789', type: 'name-phone-pad'},
     {label: 'Date of Birth', value: '1997-11-14'},
     {label: 'Delivery Address', value: 'Batam, Riau Islands'},
@@ -35,7 +35,7 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 size={99}
                 resizeMode={'contain'}
                 borderRadius={200}
-                source={require('../assets/img/user.jpg')}
+                source={require('../assets/img/no-pp.jpg')}
                 alt="Photo profile"
               />
             </Center>
