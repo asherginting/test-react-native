@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "803359501671",
+    "project_id": "go-rental-e44e0",
+    "storage_bucket": "go-rental-e44e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803359501671:android:f5906c5ff63d122fa153c2",
+        "android_client_info": {
+          "package_name": "com.asher.gorental"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803359501671-b40qtog5h4h7innf2j5oisde44t8k03v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asher.gorental",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "803359501671-p0js8jbntjhjo6e46e5vsrhmj727remc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB5Kg5oB7FaP-_tO9CPibMfbdKCMd0zQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803359501671-p0js8jbntjhjo6e46e5vsrhmj727remc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,7 +19,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/motor.jpg'),
+      image: require('../assets/img/beat.jpg'),
       rating: 4,
     },
     {
@@ -27,7 +27,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/scoter.jpg'),
+      image: require('../assets/img/satriafu.jpg'),
       rating: 4,
     },
     {
@@ -35,7 +35,7 @@ const SearchList = () => {
       seet: 2,
       stock: 2,
       price: 20000,
-      image: require('../assets/img/motor.jpg'),
+      image: require('../assets/img/beat.jpg'),
       rating: 4,
     },
     {
@@ -43,7 +43,7 @@ const SearchList = () => {
       seet: 2,
       stock: 1,
       price: 20000,
-      image: require('../assets/img/car.jpg'),
+      image: require('../assets/img/avanza.jpeg'),
       rating: 4,
     },
     {
@@ -51,7 +51,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/scoter.jpg'),
+      image: require('../assets/img/satriafu.jpg'),
       rating: 4,
     },
     {
@@ -59,7 +59,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/motor.jpg'),
+      image: require('../assets/img/beat.jpg'),
       rating: 4,
     },
     {
@@ -67,7 +67,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/motor.jpg'),
+      image: require('../assets/img/beat.jpg'),
       rating: 4,
     },
     {
@@ -75,7 +75,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/car.jpg'),
+      image: require('../assets/img/avanza.jpeg'),
       rating: 4,
     },
     {
@@ -83,7 +83,7 @@ const SearchList = () => {
       seet: 2,
       stock: 3,
       price: 20000,
-      image: require('../assets/img/scoter.jpg'),
+      image: require('../assets/img/satriafu.jpg'),
       rating: 4,
     },
   ];
