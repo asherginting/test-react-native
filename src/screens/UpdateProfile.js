@@ -4,38 +4,50 @@ import {Text, Image, Center, Radio, Stack} from 'native-base';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Button from '../components/Button';
+import {useSelector} from 'react-redux';
 
 const UpdateProfile = ({navigation: {goBack}}) => {
+  const {profile} = useSelector(state => state);
+
+  const {name, username, image, email, phone, birthdate, address} =
+    profile.results;
+
   const dataInput = [
-    {label: 'Name', value: 'Example'},
-    {label: 'Email Address', value: 'example@mail.com', type: 'email-address'},
-    {label: 'Phone Number', value: '08123456789', type: 'name-phone-pad'},
-    {label: 'Date of Birth', value: '1997-11-14'},
-    {label: 'Delivery Address', value: 'Batam, Riau Islands'},
+    {label: 'Name', value: name || username},
+    {label: 'Email Address', value: email, type: 'email-address'},
+    {label: 'Phone Number', value: phone, type: 'name-phone-pad'},
+    {label: 'Date of Birth', value: birthdate},
+    {label: 'Delivery Address', value: address},
   ];
 
   return (
     <View>
-      <ScrollView>
+      <TouchableOpacity style={styles.back} onPress={() => goBack()}>
+        <EntypoIcon
+          name="chevron-left"
+          color="black"
+          size={35}
+          style={styles.icon}
+        />
+        <Text fontSize={20} bold style={styles.textBack}>
+          Update Profile
+        </Text>
+      </TouchableOpacity>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.wrapper}>
-          <TouchableOpacity style={styles.back} onPress={() => goBack()}>
-            <EntypoIcon
-              name="chevron-left"
-              color="black"
-              size={35}
-              style={styles.icon}
-            />
-            <Text fontSize={20} bold style={styles.textBack}>
-              Update Profile
-            </Text>
-          </TouchableOpacity>
           <View style={styles.profilePict}>
             <Center>
               <Image
                 size={99}
                 resizeMode={'contain'}
                 borderRadius={200}
-                source={require('../assets/img/no-pp.jpg')}
+                source={
+                  profile.results.image
+                    ? {
+                        uri: image.replace(/localhost/g, '192.168.43.195'),
+                      }
+                    : require('../assets/img/no-pp.jpg')
+                }
                 alt="Photo profile"
               />
             </Center>
@@ -56,11 +68,11 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 space={4}
                 w="75%"
                 maxW="300px">
-                <Radio colorScheme='blue' value="1" my={1} >
-                  <Text style={styles.textRadio}>Male</Text>
-                </Radio>
-                <Radio colorScheme='blue' value="2" my={1}>
+                <Radio value="1" my={1}>
                   <Text style={styles.textRadio}>Female</Text>
+                </Radio>
+                <Radio value="2" my={1}>
+                  <Text style={styles.textRadio}>Male</Text>
                 </Radio>
               </Stack>
             </Radio.Group>
