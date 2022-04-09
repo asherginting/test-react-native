@@ -1,33 +1,113 @@
 import { View, Text, TextInput, ImageBackground, StyleSheet, FlatList, ScrollView, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
+import {getCategory, getFilter} from '../redux/actions/vehicles';
+import {getDetailCategory} from '../redux/actions/detailCategory';
+import {myOrder} from '../redux/actions/transaction';
+import {getProfile} from '../redux/actions/user';
+
+const DetailTop = ({category, onPress}) => {
+  return (
+    <View style={styles.topProduct}>
+      <Text style={styles.type}>{category}</Text>
+      <TouchableOpacity style={styles.more} onPress={onPress}>
+        <Text>View More</Text>
+        <Icon2 name="navigate-next" size={20} />
+      </TouchableOpacity>
+    </View>
+  );
+};
+const FlatListSection = ({dataList, onPress, navigation}) => {
+  const dispatch = useDispatch();
+  const handleOrder = id => {
+    dispatch(myOrder(id));
+    navigation.navigate('Order');
+  };
+  return (
+    <FlatList
+      data={dataList}
+      horizontal={true}
+      style={styles.flat}
+      renderItem={({item, index}) => {
+        if (index < 5) {
+          return (
+            <TouchableOpacity onPress={() => handleOrder(item.idVehicle)}>
+              <ImageBackground
+                source={
+                  item.image
+                    ? {uri: item.image}
+                    : require('../assets/img/no-image.jpg')
+                }
+                style={styles.imgProduct}
+                resizeMode="cover"
+                width={265}
+                height={168}
+              />
+            </TouchableOpacity>
+          );
+        }
+      }}
+    />
+  );
+};
 
 const Home = ({navigation}) => {
-  const cars = [
-    {image: require('../assets/img/avanza.jpeg'), text: 'test'},
-    {image: require('../assets/img/xenia.jpg'), text: 'test'},
-    {image: require('../assets/img/mazda.png'), text: 'test'},
-  ];
+  const [key, setKey] = useState();
 
-  const motobike = [
-    {image: require('../assets/img/beat.jpg'), text: 'test'},
-    {image: require('../assets/img/vario.jpg'), text: 'test'},
-    {image: require('../assets/img/satriafu.jpg'), text: 'test'},
-  ];
+  const dispatch = useDispatch();
+  const {cars, motorbike, bike, auth, pickup} = useSelector(state => state);
 
-  const bike = [
-    {image: require('../assets/img/polygon.jpg'), text: 'test'},
-    {image: require('../assets/img/onthel.jpg'), text: 'test'},
-    {image: require('../assets/img/polygon2.jpeg'), text: 'test'},
-  ];
-  const typeProduct = ['Cars',];
-  const typeProduct2 = ['Motorbike'];
-  const typeProduct3 = ['Bike'];
+  useEffect(() => {
+    dispatch(getCategory('CAR'));
+    dispatch(getCategory('MOTORBIKE'));
+    dispatch(getCategory('BIKE'));
+    dispatch(getCategory('PICKUP'));
+    dispatch(getProfile(auth.token));
+  }, []);
+
+  const gotoDetail = (nameCategory, idCategory) => {
+    dispatch(getDetailCategory(nameCategory, idCategory));
+    navigation.navigate('DetailCategory');
+  };
+
+  const handleSearch = () => {
+    dispatch(getFilter(key));
+    navigation.navigate('SearchList');
+  };
+
+  const handleOrder = id => {
+    dispatch(myOrder(id));
+    navigation.navigate('Order');
+  };
+
+  // const cars = [
+  //   {image: require('../assets/img/avanza.jpeg'), text: 'test'},
+  //   {image: require('../assets/img/xenia.jpg'), text: 'test'},
+  //   {image: require('../assets/img/mazda.png'), text: 'test'},
+  // ];
+
+  // const motobike = [
+  //   {image: require('../assets/img/beat.jpg'), text: 'test'},
+  //   {image: require('../assets/img/vario.jpg'), text: 'test'},
+  //   {image: require('../assets/img/satriafu.jpg'), text: 'test'},
+  // ];
+
+  // const bike = [
+  //   {image: require('../assets/img/polygon.jpg'), text: 'test'},
+  //   {image: require('../assets/img/onthel.jpg'), text: 'test'},
+  //   {image: require('../assets/img/polygon2.jpeg'), text: 'test'},
+  // ];
+  // const typeProduct = ['Cars',];
+  // const typeProduct2 = ['Motorbike'];
+  // const typeProduct3 = ['Bike'];
+
+
 
   return (
     <View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <ImageBackground
           source={require('../assets/img/home.png')}
           alt="home header"
@@ -37,103 +117,57 @@ const Home = ({navigation}) => {
               style={styles.input}
               placeholderTextColor="#fff"
               placeholder="Search Vehicle"
+              onChangeText={setKey}
+              value={key}
             />
-            <Icon name="search" size={22} style={styles.searchIcon} />
+            <TouchableOpacity
+              style={styles.iconSearchWrap}
+              onPress={handleSearch}>
+              <Icon name="search" size={20} style={styles.searchIcon} />
+            </TouchableOpacity>
           </View>
         </ImageBackground>
-        {typeProduct.map((data, index) => {
-          return (
-            <View style={styles.wrapperProduct} key={index}>
-              <View style={styles.topProduct}>
-                <Text style={styles.type}>{data}</Text>
-                <TouchableOpacity
-                  style={styles.more}
-                  onPress={() => navigation.navigate('DetailCategory')}>
-                  <Text style={styles.viewMore}>View More</Text>
-                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <FlatList
-                  data={cars}
-                  horizontal={true}
-                  style={styles.flat}
-                  renderItem={({item}) => {
-                    return (
-                      <ImageBackground
-                        source={item.image}
-                        style={styles.imgProduct}
-                        resizeMode="cover"
-                      />
-                    );
-                  }}
-                />
-              </View>
-            </View>
-          );
-        })}
-        {typeProduct2.map((data, index) => {
-          return (
-            <View style={styles.wrapperProduct} key={index}>
-              <View style={styles.topProduct}>
-                <Text style={styles.type}>{data}</Text>
-                <TouchableOpacity
-                  style={styles.more}
-                  onPress={() => navigation.navigate('DetailCategory')}>
-                  <Text style={styles.viewMore}>View More</Text>
-                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <FlatList
-                  data={motobike}
-                  horizontal={true}
-                  style={styles.flat}
-                  renderItem={({item}) => {
-                    return (
-                      <ImageBackground
-                        source={item.image}
-                        style={styles.imgProduct}
-                        resizeMode="cover"
-                      />
-                    );
-                  }}
-                />
-              </View>
-            </View>
-          );
-        })}
-        {typeProduct3.map((data, index) => {
-          return (
-            <View style={styles.wrapperProduct} key={index}>
-              <View style={styles.topProduct}>
-                <Text style={styles.type}>{data}</Text>
-                <TouchableOpacity
-                  style={styles.more}
-                  onPress={() => navigation.navigate('DetailCategory')}>
-                  <Text style={styles.viewMore}>View More</Text>
-                  <Icon2 name="navigate-next" size={20} color='#0085DF' />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <FlatList
-                  data={bike}
-                  horizontal={true}
-                  style={styles.flat}
-                  renderItem={({item}) => {
-                    return (
-                      <ImageBackground
-                        source={item.image}
-                        style={styles.imgProduct}
-                        resizeMode="cover"
-                      />
-                    );
-                  }}
-                />
-              </View>
-            </View>
-          );
-        })}
+        <View style={styles.wrapperProduct}>
+          <DetailTop
+            onPress={() => gotoDetail('cars', cars.results[0].idCategory)}
+            category="Car"
+          />
+          <View>
+            <FlatListSection
+              dataList={cars.results}
+              // onPress={() => navigation.navigate('Order')}
+              navigation={navigation}
+            />
+          </View>
+        </View>
+        <View style={styles.wrapperProduct}>
+          <DetailTop
+            onPress={() =>
+              gotoDetail('motorbike', motorbike.results[0].idCategory)
+            }
+            category="Motorbike"
+          />
+          <View>
+            <FlatListSection
+              dataList={motorbike.results}
+              // onPress={() => navigation.navigate('Order')}
+              navigation={navigation}
+            />
+          </View>
+        </View>
+        <View style={styles.wrapperProduct}>
+          <DetailTop
+            onPress={() => gotoDetail('bike', bike.results[0].idCategory)}
+            category="Bike"
+          />
+          <View>
+            <FlatListSection
+              dataList={bike.results}
+              // onPress={() => navigation.navigate('Order')}
+              navigation={navigation}
+            />
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -158,10 +192,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 15,
   },
-  searchIcon: {
-    color: '#fff',
+  iconSearchWrap: {
     position: 'absolute',
     right: 40,
+    height: '100%',
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  searchIcon: {
+    color: '#fff',
   },
   wrapperProduct: {
     padding: 20,
