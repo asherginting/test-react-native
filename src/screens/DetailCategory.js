@@ -1,52 +1,64 @@
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import VehicleList from '../components/VehicleList';
-
+import {useSelector, useDispatch} from 'react-redux';
+import Button from '../components/Button';
+// import {getDetailCategory} from '../redux/actions/detailCategory';
+import {myOrder} from '../redux/actions/transaction';
+import {getCategory} from '../redux/actions/vehicles';
 
 const DetailCategory = ({navigation}) => {
-  const listVehicles = [
-    {
-      name: 'Toyota Avanza',
-      seet: 5,
-      stock: 3,
-      price: 300000,
-      image: require('../assets/img/avanza.jpeg'),
-      rating: 4,
-    },
-    {
-      name: 'Xenia',
-      seet: 5,
-      stock: 5,
-      price: 300000,
-      image: require('../assets/img/xenia.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Mazda',
-      seet: 4,
-      stock: 2,
-      price: 500000,
-      image: require('../assets/img/mazda.png'),
-      rating: 4,
-    },
-  ];
+  const {detailCategory} = useSelector(state => state);
+  const dataState = useSelector(state => state);
+
+  const type = detailCategory.nameCategory;
+
+  // const typeState = useSelector(state => state[`${type}`]);
+
+  const dispatch = useDispatch();
+
+  const handleOrder = id => {
+    dispatch(myOrder(id));
+    navigation.navigate('Order');
+  };
+
+  const nextPage = () => {
+    dispatch(
+      getCategory(
+        type.toUpperCase(),
+        dataState[`${type}`].pageInfo.currentPage + 1,
+      ),
+    );
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {listVehicles.map((data, index) => {
+      {dataState[`${type}`].results.map((data, index) => {
         return (
           <TouchableOpacity
             key={index}
-            onPress={() => navigation.navigate('Order')}>
+            onPress={() => handleOrder(data.idVehicle)}>
             <VehicleList
-              image={data.image}
-              name={data.name}
-              seet={data.seet}
-              stock={data.stock}
+              image={
+                data.image
+                  ? {uri: data.image.replace(/localhost/g, '192.168.247.222')}
+                  : require('../assets/img/no-image.jpg')
+              }
+              name={data.brand}
+              seet={data.capacity}
+              stock={data.qty}
               price={data.price}
             />
           </TouchableOpacity>
         );
       })}
+      {dataState[`${type}`].pageInfo && dataState[`${type}`].pageInfo.next ? (
+        <Button color="primary" onPress={nextPage}>
+          Next
+        </Button>
+      ) : (
+        <></>
+      )}
       <View style={styles.bottom} />
     </ScrollView>
   );
