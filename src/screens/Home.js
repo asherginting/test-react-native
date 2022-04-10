@@ -1,4 +1,5 @@
 import { View, Text, TextInput, ImageBackground, StyleSheet, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import {Box} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,6 +8,7 @@ import {getCategory, getFilter} from '../redux/actions/vehicles';
 import {getDetailCategory} from '../redux/actions/detailCategory';
 import {myOrder} from '../redux/actions/transaction';
 import {getProfile} from '../redux/actions/user';
+import Button from '../components/Button';
 
 const DetailTop = ({category, onPress}) => {
   return (
@@ -37,13 +39,11 @@ const FlatListSection = ({dataList, onPress, navigation}) => {
               <ImageBackground
                 source={
                   item.image
-                    ? {uri: item.image}
+                    ? {uri: item.image.replace(/localhost/g, '192.168.247.222')}
                     : require('../assets/img/no-image.jpg')
                 }
                 style={styles.imgProduct}
                 resizeMode="cover"
-                width={265}
-                height={168}
               />
             </TouchableOpacity>
           );
@@ -57,7 +57,9 @@ const Home = ({navigation}) => {
   const [key, setKey] = useState();
 
   const dispatch = useDispatch();
-  const {cars, motorbike, bike, auth, pickup} = useSelector(state => state);
+  const {car, motorbike, bike, auth, profile, pickup} = useSelector(
+    state => state,
+  );
 
   useEffect(() => {
     dispatch(getCategory('CAR'));
@@ -73,37 +75,10 @@ const Home = ({navigation}) => {
   };
 
   const handleSearch = () => {
-    dispatch(getFilter(key));
+    const dataFilter = {search: key};
+    dispatch(getFilter(dataFilter));
     navigation.navigate('SearchList');
   };
-
-  const handleOrder = id => {
-    dispatch(myOrder(id));
-    navigation.navigate('Order');
-  };
-
-  // const cars = [
-  //   {image: require('../assets/img/avanza.jpeg'), text: 'test'},
-  //   {image: require('../assets/img/xenia.jpg'), text: 'test'},
-  //   {image: require('../assets/img/mazda.png'), text: 'test'},
-  // ];
-
-  // const motobike = [
-  //   {image: require('../assets/img/beat.jpg'), text: 'test'},
-  //   {image: require('../assets/img/vario.jpg'), text: 'test'},
-  //   {image: require('../assets/img/satriafu.jpg'), text: 'test'},
-  // ];
-
-  // const bike = [
-  //   {image: require('../assets/img/polygon.jpg'), text: 'test'},
-  //   {image: require('../assets/img/onthel.jpg'), text: 'test'},
-  //   {image: require('../assets/img/polygon2.jpeg'), text: 'test'},
-  // ];
-  // const typeProduct = ['Cars',];
-  // const typeProduct2 = ['Motorbike'];
-  // const typeProduct3 = ['Bike'];
-
-
 
   return (
     <View>
@@ -126,15 +101,24 @@ const Home = ({navigation}) => {
               <Icon name="search" size={20} style={styles.searchIcon} />
             </TouchableOpacity>
           </View>
+          {profile.results.username === 'Admin' && (
+            <Box px="5">
+              <Button
+                color={'primary'}
+                onPress={() => navigation.navigate('AddItem')}>
+                Add new item
+              </Button>
+            </Box>
+          )}
         </ImageBackground>
         <View style={styles.wrapperProduct}>
           <DetailTop
-            onPress={() => gotoDetail('cars', cars.results[0].idCategory)}
+            onPress={() => gotoDetail('car', car.results[0].idCategory)}
             category="Car"
           />
           <View>
             <FlatListSection
-              dataList={cars.results}
+              dataList={car.results}
               // onPress={() => navigation.navigate('Order')}
               navigation={navigation}
             />
@@ -168,6 +152,19 @@ const Home = ({navigation}) => {
             />
           </View>
         </View>
+        {/* <View style={styles.wrapperProduct}>
+          <DetailTop
+            onPress={() => gotoDetail('pickup', pickup.results[0].idCategory)}
+            category="Pickup"
+          />
+          <View>
+            <FlatListSection
+              dataList={pickup.results}
+              // onPress={() => navigation.navigate('Order')}
+              navigation={navigation}
+            />
+          </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -189,8 +186,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: 'rgba(34, 47, 62,0.6)',
     borderRadius: 10,
-    fontSize: 14,
-    paddingHorizontal: 15,
+    fontSize: 20,
+    paddingLeft: 15,
+    paddingRight: 0,
   },
   iconSearchWrap: {
     position: 'absolute',
@@ -199,6 +197,7 @@ const styles = StyleSheet.create({
     width: 90,
     justifyContent: 'center',
     alignItems: 'flex-end',
+    // backgroundColor: 'red'
   },
   searchIcon: {
     color: '#fff',
@@ -213,8 +212,7 @@ const styles = StyleSheet.create({
   },
   type: {
     fontWeight: 'bold',
-    fontSize: 22,
-    color: '#393939',
+    fontSize: 20,
   },
   more: {
     flexDirection: 'row',
@@ -232,9 +230,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: 'hidden',
   },
-  viewMore: {
-    color: '#0085DF'
-  }
 });
 
 export default Home;
