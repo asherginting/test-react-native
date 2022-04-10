@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Rate from '../components/Rate';
 import {Box, Text, Badge} from 'native-base';
@@ -15,6 +16,10 @@ import moment from 'moment';
 
 import priceFormat from '../helper/priceFormat';
 import Button from '../components/Button';
+
+import {getDetailVehicle} from '../redux/actions/vehicles';
+import {detailOrder} from '../redux/actions/transaction';
+import {goToVerify} from '../redux/actions/verify';
 
 const LocationSection = ({address, icon}) => {
   return (
@@ -35,26 +40,27 @@ const LocationSection = ({address, icon}) => {
 };
 
 const Order = ({navigation}) => {
-  const data = {
-    image: require('../assets/img/avanza.jpeg'),
-    rate: 4,
-    brand: 'Toyota Avanza',
-    price: 300000,
-    seet: 5,
-    prepayment: false,
-    stock: 3,
-    address: 'Jalan Malioboro, No 24, Yogyakarta',
-  };
-
   const [favorite, setFavorite] = useState(false);
   const [count, setCount] = useState(1);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const [isStart, setIsStart] = useState(false);
-  const [endDate, setEndDate] = useState();
+  const [endDate, setEndDate] = useState(1);
+
+  const {myOrder, detailVehicle, profile} = useSelector(state => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({type: 'ADD_VEHICLE_CLEAR'});
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getDetailVehicle(myOrder.idVehicle));
+  }, [dispatch, myOrder.idVehicle]);
 
   const increment = () => {
-    if (count < data.stock) {
+    if (count < qty) {
       setCount(count + 1);
     }
   };
@@ -64,12 +70,29 @@ const Order = ({navigation}) => {
     }
   };
 
+  const gotoReservation = () => {
+    dispatch(detailOrder(count, date, endDate));
+    navigation.navigate('Payment');
+    // console.log('test', count, moment(date).format('MMM DD YY'), endDate);
+  };
+  const handleVerify = () => {
+    dispatch({type: 'AUTH_LOGOUT'});
+    dispatch(goToVerify);
+  };
+
+  const {type, brand, capacity, prepayment, location, price, qty, image} =
+    detailVehicle.results;
+
   return (
     <ScrollView>
       <View style={styles.headerWrapper}>
         <ImageBackground
-          source={data.image}
-          alt={data.brand}
+          source={
+            image
+              ? {uri: image.replace(/localhost/g, '192.168.247.222')}
+              : require('../assets/img/no-image.jpg')
+          }
+          alt={brand}
           style={styles.imageProduct}>
           <View style={styles.opacity}>
             <View style={styles.header}>
@@ -88,7 +111,7 @@ const Order = ({navigation}) => {
                   <Icon
                     name={favorite ? 'heart' : 'heart-o'}
                     size={35}
-                    color={favorite ? '#eb4d4b' : 'white'}
+                    color={favorite ? 'red' : 'white'}
                   />
                 </TouchableOpacity>
               </View>
@@ -98,29 +121,29 @@ const Order = ({navigation}) => {
         <View style={styles.container}>
           <Box style={styles.topDetail}>
             <Text fontSize={'3xl'} bold>
-              {data.brand}
+              {brand}
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Chat')}>
+            <TouchableOpacity>
               <Icon name="comment-o" size={35} color="#0085DF" />
             </TouchableOpacity>
           </Box>
           <Text mb="1.5" fontSize={'3xl'} bold>
-            {priceFormat(data.price)}/day
+            {priceFormat(price)}/day
           </Text>
-          <Text fontSize={'lg'}>Max for {data.seet} person</Text>
+          <Text fontSize={'lg'}>Max for {capacity} person</Text>
           <Text fontSize={'lg'}>
-            {data.prepayment ? 'Prepayment' : 'No prepayment'}
+            {prepayment ? 'Prepayment' : 'No prepayment'}
           </Text>
-          {data.stock <= 2 ? (
+          {qty <= 2 ? (
             <Text mb={'3'} fontSize={'lg'} bold color="#d63031">
-              {data.stock} bikes left
+              {qty} bikes left
             </Text>
           ) : (
             <Text mb={'3'} fontSize={'lg'} bold color="#0085DF">
               Available
             </Text>
           )}
-          <LocationSection address={data.address} icon={'map-marker'} />
+          <LocationSection address={location} icon={'map-marker'} />
           <LocationSection
             address="3.2 miles from your location"
             icon="street-view"
@@ -130,11 +153,11 @@ const Order = ({navigation}) => {
             justifyContent={'space-between'}
             alignItems="center">
             <Text fontSize={'lg'} my={'3'} bold>
-              Select bikes
+              Select {type}
             </Text>
             <Box flexDirection={'row'}>
               <TouchableOpacity style={styles.counter} onPress={increment}>
-                <Text fontSize={'lg'} bold color='white'>
+                <Text fontSize={'lg'} bold color={'white'}>
                   +
                 </Text>
               </TouchableOpacity>
@@ -142,7 +165,7 @@ const Order = ({navigation}) => {
                 {count}
               </Text>
               <TouchableOpacity style={styles.counter} onPress={decrement}>
-                <Text fontSize={'lg'} bold color='white'>
+                <Text fontSize={'xl'} bold color={'white'}>
                   -
                 </Text>
               </TouchableOpacity>
@@ -166,6 +189,7 @@ const Order = ({navigation}) => {
                 mode="date"
                 open={open}
                 date={date}
+                minimumDate={new Date()}
                 onConfirm={dateItem => {
                   setOpen(false);
                   setDate(dateItem);
@@ -190,13 +214,22 @@ const Order = ({navigation}) => {
               </Picker>
             </TouchableOpacity>
           </Box>
-          <Box mt={'25'}>
-            <Button
-              color="primary"
-              onPress={() => navigation.navigate('Payment')}>
-              Reservation
-            </Button>
-          </Box>
+          {profile.results?.confirm === '0' ? (
+            <Box>
+              <Text mt="5" mb="2" bold>
+                You must verify your account, before making a reservation!
+              </Text>
+              <Button color="primary" onPress={handleVerify}>
+                Verify account
+              </Button>
+            </Box>
+          ) : (
+            <Box mt={'25'}>
+              <Button color="primary" onPress={gotoReservation}>
+                Reservation
+              </Button>
+            </Box>
+          )}
         </View>
       </View>
     </ScrollView>

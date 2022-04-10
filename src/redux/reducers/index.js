@@ -6,6 +6,22 @@ import auth from './auth';
 import signup from './signup';
 import verify from './verify';
 import forgot from './forgot';
+import car from './cars';
+import bike from './bike';
+import motorbike from './motorbike';
+import detailCategory from './detailCategory';
+import filterVehicle from './filterVehicle';
+import detailVehicle from './detailVehicle';
+import addVehicle from './addVehicle';
+import myOrder from './myOrder';
+import detailOrder from './detailOrder';
+import paymentForm from './paymentForm';
+import transactionCode from './transactionCode';
+import addHistory from './addHistory';
+import histories from './histories';
+import profile from './profile';
+import deleteHistory from './deleteHistory';
+import updateProfile from './updateProfile';
 
 const persistConfig = {
   key: 'auth',
@@ -17,6 +33,22 @@ const rootReducers = combineReducers({
   signup,
   verify,
   forgot,
+  car,
+  bike,
+  motorbike,
+  detailCategory,
+  filterVehicle,
+  myOrder,
+  detailVehicle,
+  addVehicle,
+  detailOrder,
+  paymentForm,
+  transactionCode,
+  addHistory,
+  histories,
+  deleteHistory,
+  profile,
+  updateProfile,
 });
 
 export default rootReducers;

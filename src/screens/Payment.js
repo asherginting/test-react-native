@@ -1,17 +1,78 @@
 import {TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {Box, Text} from 'native-base';
 import Stepper from '../components/Stepper';
 import InputPayment from '../components/InputPayment';
 import {Picker} from '@react-native-picker/picker';
 import Button from '../components/Button';
+import {paymentForm} from '../redux/actions/transaction';
+import {checkEmail, checkPhone} from '../helper/check';
 
 const Payment = ({navigation}) => {
+  const payment = [
+    'Prepayment (no tax)',
+    'Pay at the end (include tax)',
+    'Partial payment (include tax)',
+  ];
+
   const [selectPayment, setSelectPayment] = useState();
   const [isSelect, setIsSelect] = useState(false);
+  const [idCard, setIdCard] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [phone, setPhone] = useState();
+  const [email, setEmail] = useState();
+  const [location, setLocation] = useState();
+  const [isErr, setIsErr] = useState();
+  const [errMessage, setErrMessage] = useState();
 
-  const payment = ['Transfer Bank', 'Dana', 'Gopay', 'LinkAja'];
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    let err = false;
+    setIsErr(false);
+    setErrMessage();
+    if (
+      idCard &&
+      firstName &&
+      lastName &&
+      phone &&
+      email &&
+      location &&
+      selectPayment
+    ) {
+      setIsErr(false);
+      if (!checkEmail(email)) {
+        setIsErr(true);
+        err = true;
+        setErrMessage('Email is not valid!');
+      }
+      if (!checkPhone(phone)) {
+        setIsErr(true);
+        err = true;
+        setErrMessage('Phone number does not match!');
+      }
+      if (!err) {
+        dispatch(
+          paymentForm(
+            idCard,
+            firstName,
+            lastName,
+            phone,
+            email,
+            location,
+            selectPayment,
+          ),
+        );
+        navigation.navigate('Payment2');
+      }
+    } else {
+      setIsErr(true);
+    }
+  };
+
   return (
     <Box p={'3'}>
       <TouchableOpacity style={styles.head} onPress={() => navigation.goBack()}>
@@ -24,26 +85,62 @@ const Payment = ({navigation}) => {
         <Box py={'10'}>
           <Stepper currentlyActive={1} />
         </Box>
+        {isErr && (
+          <Text
+            color={'danger.700'}
+            style={styles.message}
+            py="2"
+            my="7"
+            textAlign={'center'}
+            fontSize="xl"
+            bold>
+            {errMessage || 'All data must be filled'}
+          </Text>
+        )}
         <Box py="2">
-          <InputPayment placeholder="ID Card Number" type="number-pad" />
+          <InputPayment
+            placeholder="ID card Number"
+            type="number-pad"
+            onChangeText={setIdCard}
+            value={idCard}
+          />
         </Box>
         <Box py="2">
-          <InputPayment placeholder="First Name" />
+          <InputPayment
+            placeholder="First Name"
+            onChangeText={setFirstName}
+            value={firstName}
+          />
         </Box>
         <Box py="2">
-          <InputPayment placeholder="Last Name" />
+          <InputPayment
+            placeholder="Last Name"
+            onChangeText={setLastName}
+            value={lastName}
+          />
         </Box>
         <Box py="2">
           <InputPayment
             placeholder="Mobile phone (must be active)"
             type="phone-pad"
+            onChangeText={setPhone}
+            value={phone}
           />
         </Box>
         <Box py="2">
-          <InputPayment placeholder="Email address" type="email-address" />
+          <InputPayment
+            placeholder="Email address"
+            type="email-address"
+            onChangeText={setEmail}
+            value={email}
+          />
         </Box>
         <Box py="2">
-          <InputPayment placeholder="Location (home, office, etc)" />
+          <InputPayment
+            placeholder="Location (home, office, set)"
+            onChangeText={setLocation}
+            value={location}
+          />
         </Box>
         <Box py="2">
           <Picker
@@ -72,9 +169,7 @@ const Payment = ({navigation}) => {
           </Picker>
         </Box>
         <Box py={'10'}>
-          <Button
-            color="primary"
-            onPress={() => navigation.navigate('Payment2')}>
+          <Button color="primary" onPress={handleSubmit}>
             See Order Details
           </Button>
         </Box>
@@ -89,8 +184,9 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 60,
-    borderRadius: 20,
+    // color: 'gray',
     backgroundColor: 'rgba(178, 190, 195,0.3)',
+    borderRadius: 20,
     fontSize: 20,
     paddingHorizontal: 15,
   },
