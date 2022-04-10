@@ -1,18 +1,27 @@
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import {Text} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+
 import Input from '../components/Input';
 import Button from '../components/Button';
 
-
 import {authSignup} from '../redux/actions/signup';
+import {checkEmail, checkPassword, checkPhone} from '../helper/check';
 
 const Signup = ({navigation}) => {
-  const [isEmpty, setIsEmpty] = useState();
+  const [isErr, setIsErr] = useState();
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
+  const [errMessage, setErrMessage] = useState();
 
   const dispatch = useDispatch();
 
@@ -25,43 +34,90 @@ const Signup = ({navigation}) => {
   }, [dispatch]);
   useEffect(() => {
     if (signup.isSuccess) {
-      navigation.navigate('Verify');
+      // navigation.navigate('Verify');
+      setUsername();
+      setEmail();
+      setPhone();
+      setPassword();
+      navigation.navigate('Login');
+      // dispatch({type: 'SIGNUP_CLEAR'});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signup]);
 
   const handleSignup = () => {
+    let err = false;
+    setErrMessage();
+    console.log(errMessage);
     if (username && email && phone && password) {
-      setIsEmpty(false);
-      dispatch(authSignup(username, email, phone, password));
-      if (signup.isSuccess) {
-        navigation.navigate('Verify');
+      setIsErr(false);
+      if (!checkPassword(password)) {
+        err = true;
+        setIsErr(true);
+        setErrMessage(
+          'Password must be at least 6 characters must contain numeric lowercase and uppercase letter!',
+        );
+      }
+      if (!checkPhone(phone)) {
+        err = true;
+        setIsErr(true);
+        setErrMessage('Phone number does not match!');
+      }
+      if (!checkEmail(email)) {
+        err = true;
+        setIsErr(true);
+        setErrMessage('Email is not valid!');
+      }
+      if (!err) {
+        setIsErr(false);
+        setErrMessage('');
+        dispatch(authSignup(username, email, phone, password));
       }
     } else {
-      setIsEmpty(true);
+      setIsErr(true);
     }
   };
-  
+
+  const goToLogin = () => {
+    navigation.navigate('Login');
+    dispatch({type: 'AUTH_CLEAR_ERR'});
+  };
+
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrolView}>
       <ImageBackground
         source={require('../assets/img/bg-signup.jpg')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.opacity}>
           <View style={styles.header}>
-            <Text style={styles.head}>LET'S HAVE</Text>
-            <Text style={styles.head}>SOME RIDE</Text>
+            <Text color={'white'} fontSize="4xl" bold style={styles.head}>
+              LET'S HAVE
+            </Text>
+            <Text color={'white'} fontSize="4xl" bold style={styles.head}>
+              SOME RIDE
+            </Text>
           </View>
           <View style={styles.form}>
-            {(isEmpty || signup.isError) && (
+            {(isErr || signup.isError) && (
               <Text
+                color={'white'}
                 style={styles.message}
+                py="2"
+                my="7"
+                textAlign={'center'}
                 fontSize="xl"
                 bold>
-                {signup.isError ? signup.errMessage : 'All data must be filled'}
+                {signup.isError
+                  ? signup.errMessage
+                  : errMessage || 'All data must be filled'}
               </Text>
             )}
-            <Input placeholder="Username" onChangeText={setUsername} value={username} />
+            <Input
+              placeholder="Username"
+              onChangeText={setUsername}
+              value={username}
+            />
             <View style={styles.gap} />
             <Input
               placeholder="Email"
@@ -77,24 +133,36 @@ const Signup = ({navigation}) => {
               value={phone}
             />
             <View style={styles.gap} />
-            <Input placeholder="Password" secureTextEntry={true} onChangeText={setPassword} value={password} />
+            <Input
+              placeholder="Password"
+              // keyboardType="visible-password"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={true}
+            />
             <View style={styles.btn}>
-              <Button color="primary" onPress={handleSignup}>Signup</Button>
+              <Button color="primary" onPress={handleSignup}>
+                Signup
+              </Button>
             </View>
             <View style={styles.loginContain}>
               <Text style={styles.login}>Already have account?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <TouchableOpacity onPress={goToLogin}>
                 <Text style={[styles.login, styles.linklogin]}> Login now</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </ImageBackground>
+      {/* {signup.isSuccess && navigation.navigate('Verify')} */}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrolView: {
+    height: '100%',
+  },
   image: {
     height: '100%',
   },
@@ -117,10 +185,8 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   message: {
-    // backgroundColor: 'rgba(15, 185, 177,0.7)',
-    color: 'white',
+    backgroundColor: '#ED4C67',
     borderRadius: 10,
-    marginBottom: 20,
   },
   gap: {
     marginTop: 20,
@@ -138,9 +204,7 @@ const styles = StyleSheet.create({
   loginContain: {
     flexDirection: 'row',
     marginTop: 20,
-    marginBottom: 50,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginBottom: 150,
   },
   ['login']: {
     color: '#fff',
@@ -148,7 +212,7 @@ const styles = StyleSheet.create({
   linklogin: {
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    width: 80,
+    width: 74,
     fontWeight: 'bold',
   },
 });
