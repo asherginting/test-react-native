@@ -182,3 +182,61 @@ export const addVehicle = (
     }
   };
 };
+
+export const updateVehicle = (token, id, dataInput) => {
+  return async dispatch => {
+    dispatch({
+      type: 'UPD_VEHICLE_LOADING',
+    });
+    try {
+      let dataUpdate = [];
+      if (dataInput.image) {
+        dataUpdate.push({
+          name: 'image',
+          filename: dataInput.image.fileName,
+          type: dataInput.image.type,
+          data: RNFetchBlob.wrap(dataInput.image.uri),
+        });
+      }
+      Object.keys(dataInput).forEach(item => {
+        if (item) {
+          dataUpdate.push({name: `${item}`, data: String(dataInput[item])});
+        }
+      });
+
+      const {data} = await RNFetchBlob.fetch(
+        'PATCH',
+        `${BACKEND_URL}/vehicles/${id}`,
+        {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+        dataUpdate,
+      );
+      dispatch({
+        type: 'UPD_VEHICLE',
+        payload: JSON.parse(data).results,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'UPD_VEHICLE_ERR',
+        payload: err,
+      });
+    }
+  };
+};
+
+export const deleteVehicle = (token, id) => {
+  return async dispatch => {
+    dispatch({type: 'DEL_VEHICLE_LOADING'});
+    try {
+      const {data} = await http(token).delete(`/vehicles/${id}`);
+      dispatch({type: 'DEL_VEHICLE', payload: data});
+    } catch (err) {
+      dispatch({
+        type: 'DEL_VEHICLE_ERR',
+        payload: err.response.data.message,
+      });
+    }
+  };
+};

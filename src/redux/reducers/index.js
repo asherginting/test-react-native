@@ -22,9 +22,17 @@ import histories from './histories';
 import profile from './profile';
 import deleteHistory from './deleteHistory';
 import updateProfile from './updateProfile';
+import favorite from './favorite';
+import updateVehicle from './updateVehicle';
+import deleteVehicle from './deleteVehicle';
 
 const persistConfig = {
   key: 'auth',
+  storage: AsyncStorage,
+};
+
+const persistFav = {
+  key: 'favorite',
   storage: AsyncStorage,
 };
 
@@ -41,6 +49,8 @@ const rootReducers = combineReducers({
   myOrder,
   detailVehicle,
   addVehicle,
+  updateVehicle,
+  deleteVehicle,
   detailOrder,
   paymentForm,
   transactionCode,
@@ -49,6 +59,7 @@ const rootReducers = combineReducers({
   deleteHistory,
   profile,
   updateProfile,
+  favorite: persistReducer(persistFav, favorite),
 });
 
 export default rootReducers;

@@ -54,7 +54,7 @@ const DetailCategory = ({navigation}) => {
       })}
       {dataState[`${type}`].pageInfo && dataState[`${type}`].pageInfo.next ? (
         <Button color="primary" onPress={nextPage}>
-          Next
+          Load More
         </Button>
       ) : (
         <></>
