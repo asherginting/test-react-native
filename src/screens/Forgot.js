@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   message: {
     // backgroundColor: 'rgba(15, 185, 177,0.9)',
     borderRadius: 10,
-    backgroundColor: '#ED4C67',
+    // backgroundColor: '#ED4C67',
   },
   secondForm: {
     marginTop: 120,

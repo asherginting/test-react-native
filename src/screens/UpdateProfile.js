@@ -209,10 +209,10 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 space={4}
                 w="75%"
                 maxW="300px">
-                <Radio value="Female" my={1}>
+                <Radio value="Female" my={1} colorScheme="blue">
                   <Text style={styles.textRadio}>Female</Text>
                 </Radio>
-                <Radio value="Male" my={1}>
+                <Radio value="Male" my={1} colorScheme="blue">
                   <Text style={styles.textRadio}>Male</Text>
                 </Radio>
               </Stack>
@@ -308,7 +308,7 @@ const UpdateProfile = ({navigation: {goBack}}) => {
                 py="4"
                 background={'gray.400'}
                 style={styles.fakeBtn}>
-                <Text textAlign={'center'} fontSize="xl" color="gray.300" bold>
+                <Text textAlign={'center'} fontSize="md" color="gray.300" bold>
                   Save change
                 </Text>
               </Box>
@@ -331,7 +331,8 @@ const styles = StyleSheet.create({
   back: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 30,
+    marginHorizontal: 20,
   },
   icon: {
     fontWeight: 'bold',
@@ -347,7 +348,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: 0,
     right: 140,
-    backgroundColor: '#49BEB7',
+    backgroundColor: '#0085DF',
     padding: 9,
     borderRadius: 50,
   },

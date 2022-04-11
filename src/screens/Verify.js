@@ -97,7 +97,6 @@ const Verify = ({navigation}) => {
             )}
             {isErr && (
               <Text
-                color={'danger.700'}
                 style={styles.message}
                 py="2"
                 my="7"
@@ -135,7 +134,7 @@ const Verify = ({navigation}) => {
                 </Box>
                 <View style={[styles.btn, styles.sendCode]}>
                   <Button color="primary" onPress={handleSubmit}>
-                    Verify
+                    VERIFY
                   </Button>
                 </View>
               </>
@@ -199,13 +198,14 @@ const styles = StyleSheet.create({
     marginTop: '20%',
   },
   message: {
-    backgroundColor: 'rgba(15, 185, 177,0.7)',
+    // backgroundColor: 'rgba(15, 185, 177,0.7)',
+    color: 'white',
     borderRadius: 10,
   },
   textForm: {
     textAlign: 'center',
     marginBottom: 20,
-    fontSize: 19,
+    fontSize: 15,
   },
   btn: {
     marginTop: 10,

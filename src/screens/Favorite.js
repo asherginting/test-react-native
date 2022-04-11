@@ -9,65 +9,65 @@ import priceFormat from '../helper/priceFormat';
 const Favourites = ({navigation}) => {
   const dataDummy = [
     {
-      brand: 'Vespa Matic',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Jupiter',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Honda Supra',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Ymah KLX',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Toyota Avanza',
+      location: 'Bandung',
+      prepayment: 350000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/avanza.jpeg'),
     },
     {
-      brand: 'Vespa Matic',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Jupiter',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Honda Supra',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Beat Street',
+      location: 'Jakarta',
+      prepayment: 120000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/beat.jpg'),
     },
     {
-      brand: 'Ymah KLX',
-      location: 'Senayan, Jakarta',
-      prepayment: 245000,
+      brand: 'Toyota Avanza',
+      location: 'Bandung',
+      prepayment: 350000,
       rentStartDate: '2022-04-11',
       rentEndDate: '2022-04-13',
       image: require('../assets/img/avanza.jpeg'),
@@ -79,8 +79,8 @@ const Favourites = ({navigation}) => {
     <Box p="5">
       <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
         <EntypoIcon name="chevron-left" color="black" size={39} />
-        <Text fontSize={'3xl'} pl="2" bold>
-          Your Favourites
+        <Text fontSize={'2xl'} pl="2" bold>
+          Your Favorites
         </Text>
       </TouchableOpacity>
       <Text color={'gray.500'} my="5" textAlign={'center'}>
@@ -126,7 +126,7 @@ const Favourites = ({navigation}) => {
               <TouchableOpacity
                 style={styles.badgeDelete}
                 onPress={() => setFavourite(false)}>
-                <AntIcon name="heart" color={'#49BEB7'} size={30} />
+                <AntIcon name="heart" color={'red'} size={30} />
               </TouchableOpacity>
             </Box>
           )}

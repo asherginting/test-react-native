@@ -104,13 +104,13 @@ const Signup = ({navigation}) => {
                 color={'white'}
                 style={styles.message}
                 py="2"
-                my="7"
+                my="3"
                 textAlign={'center'}
-                fontSize="xl"
+                fontSize="md"
                 bold>
                 {signup.isError
                   ? signup.errMessage
-                  : errMessage || 'All data must be filled'}
+                  : errMessage || 'All data is required!'}
               </Text>
             )}
             <Input
@@ -142,7 +142,7 @@ const Signup = ({navigation}) => {
             />
             <View style={styles.btn}>
               <Button color="primary" onPress={handleSignup}>
-                Signup
+                SIGNUP
               </Button>
             </View>
             <View style={styles.loginContain}>
@@ -185,7 +185,6 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   message: {
-    backgroundColor: '#ED4C67',
     borderRadius: 10,
   },
   gap: {
@@ -205,6 +204,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
     marginBottom: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   ['login']: {
     color: '#fff',
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
   linklogin: {
     borderBottomColor: '#fff',
     borderBottomWidth: 1,
-    width: 74,
+    width: 78,
     fontWeight: 'bold',
   },
 });

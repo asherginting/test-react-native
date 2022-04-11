@@ -216,12 +216,12 @@ const Order = ({navigation}) => {
           </Box>
           {profile.results?.confirm === '0' ? (
             <Box>
-              <Text mt="5" mb="2" bold>
-                You must verify your account, before making a reservation!
+              <Text mt="5" mb="2" bold textAlign={"center"}>
+              Verify your account, and make a reservation!
               </Text>
-              <Button color="primary" onPress={handleVerify}>
-                Verify account
-              </Button>
+              <Text color="#0085DF" textAlign={"center"} onPress={handleVerify}>
+                Click Here
+              </Text>
             </Box>
           ) : (
             <Box mt={'25'}>

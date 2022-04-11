@@ -9,7 +9,15 @@ import reduxStore from './src/redux/store';
 
 import MainStackNav from './src/navigation/MainStackNav';
 import AuthStackNav from './src/navigation/AuthStackNav';
-// import Forgot from './src/screens/Forgot';
+
+import PushNotification from 'react-native-push-notification';
+
+PushNotification.createChannel({
+  channelId: 'transaction',
+  channelName: 'transaction notification',
+  soundName: 'default',
+  vibrate: true,
+});
 
 const Main = () => {
   const {auth} = useSelector(state => state);

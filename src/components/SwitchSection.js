@@ -10,8 +10,8 @@ const SwitchSection = ({title, state, setState}) => {
       </Text>
       <View style={styles.switchWrapper}>
         <Switch
-          trackColor={{false: '#767577', true: '#085F63'}}
-          thumbColor={state ? '#49BEB7' : '#f4f3f4'}
+          trackColor={{false: '#767577', true: '#39A1E7'}}
+          thumbColor={state ? '#0085DF' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={() => setState(previousState => !previousState)}
           value={state}
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   prepaymentBtn: {
-    transform: [{scaleX: 2}, {scaleY: 2}],
+    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
     marginRight: 30,
   },
 });

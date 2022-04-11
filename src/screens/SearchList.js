@@ -107,7 +107,7 @@ const SearchList = ({navigation}) => {
           {!filterVehicle.isLoading && filterVehicle.pageInfo.next && (
             <Box>
               <Button color="primary" onPress={nextPage}>
-                Next
+                Load More
               </Button>
             </Box>
           )}
@@ -119,7 +119,7 @@ const SearchList = ({navigation}) => {
                 alignItems="center"
                 style={styles.alert}>
                 <Text style={styles.textAlert}>
-                  Sorry, we couldn`t find any results
+                Can't find any Vehicle
                 </Text>
               </Box>
             </Center>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     textAlign: 'center',
     lineHeight: 30,
-    fontSize: 30,
+    fontSize: 20,
   },
 });
 

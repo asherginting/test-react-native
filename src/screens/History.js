@@ -61,7 +61,7 @@ const History = () => {
   return (
     <Box p="4" my="10">
       <Text fontSize={'3xl'} textAlign="center" bold>
-        {histories.results.length > 0 ? 'History Order' : 'History is Empty'}
+        {histories.results.length > 0 ? 'History Order' : 'History'}
       </Text>
       {/* <Button onPress={test}>Test</Button> */}
       {histories.results.length > 0 && (

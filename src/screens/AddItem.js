@@ -17,19 +17,15 @@ import {
   
   const AddItem = ({navigation}) => {
     const location = [
-      'Ngawi',
-      'Bandung',
       'Jakarta',
-      'Yogyakarta',
-      'Depok',
       'Bali',
-      'Malang',
+      'Bandung',
+      'Yogyakarta',
     ];
     const categories = [
       {name: 'Cars', id: 1},
       {name: 'Motorbike', id: 2},
       {name: 'Bike', id: 3},
-      {name: 'Pickup', id: 5},
     ];
     const [image, setImage] = useState();
     const [brand, setBrand] = useState('');
@@ -72,39 +68,39 @@ import {
       if (!idCategory) {
         errForm = true;
         setErr(true);
-        setErrMessage('Category not selected!');
+        setErrMessage('Please select a Category!');
       }
       if (!selectedLocation) {
         errForm = true;
         setErr(true);
-        setErrMessage('Location not selected!');
+        setErrMessage('Please select a Location!');
       }
-      if (desc.length < 150) {
+      if (desc.length < 15) {
         errForm = true;
         setErr(true);
-        setErrMessage('Description product min 150 characters!');
+        setErrMessage('Description product min 15 characters!');
       }
       if (!price) {
         errForm = true;
         setErr(true);
-        setErrMessage('Price is required!');
+        setErrMessage('Please add Price!');
       }
-      if (brand.length < 20) {
+      if (brand.length < 10) {
         errForm = true;
         setErr(true);
-        setErrMessage('Product name min 20 characters!');
+        setErrMessage('Product name min 10 characters!');
       }
       if (image && image.fileSize >= 2000000) {
         errForm = true;
         setErr(true);
         setErrMessage(
-          'File image is to large. Make sure the size is less than 2mb',
+          'Image size is too large, Max File 2MB',
         );
       }
       if (!image) {
         errForm = true;
         setErr(true);
-        setErrMessage('Image not selected!');
+        setErrMessage('Please select a picture!');
       }
       if (!errForm) {
         dispatch(
@@ -145,11 +141,11 @@ import {
                 color="black"
               />
               <Text fontSize={'xl'} bold>
-                Add new item
+                Add New Vehicle
               </Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text fontSize={'xl'} color="gray.400">
+              <Text fontSize={'md'} color="gray.400">
                 Cancel
               </Text>
             </TouchableOpacity>
@@ -200,7 +196,7 @@ import {
               <TextInput
                 textAlign="center"
                 style={styles.input1}
-                placeholder="Product name min 20 characters"
+                placeholder="Vehicle name min 10 characters"
                 onChangeText={setBrand}
                 // value={brand}
               />
@@ -208,7 +204,7 @@ import {
                 textAlign="center"
                 style={styles.input1}
                 keyboardType="number-pad"
-                placeholder="Product price"
+                placeholder="Vehicle Price"
                 onChangeText={setPrice}
               />
             </Box>
@@ -220,7 +216,7 @@ import {
             <TextInput
               style={styles.input1}
               onChangeText={setDesc}
-              placeholder="Describe your product min 150 characters"
+              placeholder="Describe your Vehicle Item min 15 characters"
             />
             <Text fontSize={'xl'} mt="5" bold>
               Location
@@ -323,14 +319,14 @@ import {
           </Box>
           {(err || addVehicleState.isError) && (
             <Box my="5">
-              <Text textAlign={'center'} color="danger.700" fontSize={'3xl'} bold>
+              <Text textAlign={'center'} color="danger.400" fontSize={'md'} bold>
                 {errMessage}
               </Text>
             </Box>
           )}
           <Box my="5">
             {addVehicleState.isLoading ? (
-              <ActivityIndicator size={'large'} color="#32DBC6" />
+              <ActivityIndicator size={'large'} color="#0085DF" />
             ) : (
               <Button color="primary" onPress={handleSave}>
                 Save Product

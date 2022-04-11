@@ -15,8 +15,8 @@ const DetailTop = ({category, onPress}) => {
     <View style={styles.topProduct}>
       <Text style={styles.type}>{category}</Text>
       <TouchableOpacity style={styles.more} onPress={onPress}>
-        <Text>View More</Text>
-        <Icon2 name="navigate-next" size={20} />
+        <Text style={styles.viewmore}>View More</Text>
+        <Icon2 style={styles.iconnext} name="navigate-next" size={20} />
       </TouchableOpacity>
     </View>
   );
@@ -98,15 +98,18 @@ const Home = ({navigation}) => {
             <TouchableOpacity
               style={styles.iconSearchWrap}
               onPress={handleSearch}>
-              <Icon name="search" size={20} style={styles.searchIcon} />
+              <Icon name="search" size={18} style={styles.searchIcon} />
             </TouchableOpacity>
           </View>
           {profile.results.username === 'Admin' && (
             <Box px="5">
+              <Text style={styles.textadmin}>
+              You are admin, You can add items vehicle
+              </Text>
               <Button
                 color={'primary'}
                 onPress={() => navigation.navigate('AddItem')}>
-                Add new item
+                Add New Vehicle
               </Button>
             </Box>
           )}
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
     height: 290,
   },
   form: {
-    padding: 20,
+    padding: 30,
     justifyContent: 'center',
     marginTop: 45,
     position: 'relative',
@@ -186,7 +189,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: 'rgba(34, 47, 62,0.6)',
     borderRadius: 10,
-    fontSize: 20,
+    fontSize: 16,
     paddingLeft: 15,
     paddingRight: 0,
   },
@@ -202,6 +205,13 @@ const styles = StyleSheet.create({
   searchIcon: {
     color: '#fff',
   },
+  textadmin: {
+    color: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    marginLeft: 45,
+  },
   wrapperProduct: {
     padding: 20,
   },
@@ -216,6 +226,12 @@ const styles = StyleSheet.create({
   },
   more: {
     flexDirection: 'row',
+  },
+  viewmore: {
+    color: '#0085DF',
+  },
+  iconnext: {
+    color: '#0085DF',
   },
   imgWrapper: {
     width: 250,

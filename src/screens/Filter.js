@@ -19,15 +19,12 @@ import {getFilter} from '../redux/actions/vehicles';
 
 const Filter = ({navigation}) => {
   const location = [
-    'Ngawi',
-    'Bandung',
     'Jakarta',
-    'Yogyakarta',
-    'Depok',
     'Bali',
-    'Malang',
+    'Bandung',
+    'Yogyakarta',
   ];
-  const type = ['Motorbike', 'Car', 'Bike', 'Pickup'];
+  const type = ['Car', 'Motorbike', 'Bike',];
 
   const [selectedLocation, setSelectedLocation] = useState();
   const [selectRate, setSelectRate] = useState();

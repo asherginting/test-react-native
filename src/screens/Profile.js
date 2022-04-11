@@ -47,36 +47,43 @@ const Profile = ({navigation}) => {
           {profile.results?.confirm !== '0' && (
             <TouchableOpacity
               style={styles.linkItem}
-              onPress={() => navigation.navigate('Favourites')}>
-              <Text fontSize="2xl">Your favourites</Text>
-              <FaIcon name="chevron-right" size={25} />
+              onPress={() => navigation.navigate('Favorite')}>
+              <Text fontSize="xl">Your Favorites</Text>
+              <FaIcon name="chevron-right" size={20} />
             </TouchableOpacity>
           )}
-          <TouchableOpacity style={styles.linkItem}>
-            <Text fontSize="2xl">FAQ</Text>
-            <FaIcon name="chevron-right" size={25} />
+          <TouchableOpacity 
+            style={styles.linkItem}
+            onPress={() => navigation.navigate('Faq')}>
+            <Text fontSize="xl">FAQ</Text>
+            <FaIcon name="chevron-right" size={20} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.linkItem}>
-            <Text fontSize="2xl">Help</Text>
-            <FaIcon name="chevron-right" size={25} />
+          <TouchableOpacity 
+            style={styles.linkItem}
+            onPress={() => navigation.navigate('Help')}>
+            <Text fontSize="xl">Help</Text>
+            <FaIcon name="chevron-right" size={20} />
           </TouchableOpacity>
           {profile.results?.confirm !== '0' && (
             <TouchableOpacity
               style={styles.linkItem}
               onPress={() => navigation.navigate('UpdateProfile')}>
-              <Text fontSize="2xl">Update profile</Text>
-              <FaIcon name="chevron-right" size={25} />
+              <Text fontSize="xl">Update Profile</Text>
+              <FaIcon name="chevron-right" size={20} />
             </TouchableOpacity>
           )}
         </View>
         <View style={styles.btnWrapper}>
           {profile.results?.confirm === '0' && (
             <Box mb="7">
-              <Button onPress={handleVerify}>Verify account</Button>
+              <Text mt="5" mb="2" bold textAlign={"center"}>
+              Please verify your account first!
+              </Text>
+              <Text color="#0085DF" textAlign={"center"} onPress={handleVerify}>Click Here</Text>
             </Box>
           )}
           <Button color="primary" onPress={handleLogout}>
-            Log out
+            LOGOUT
           </Button>
         </View>
       </View>
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    padding: 20,
+    padding: 30,
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '80%',
