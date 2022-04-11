@@ -39,16 +39,16 @@ const Payment3 = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    if (addHistoryState.isSuccess) {
+    // if (addHistoryState.isSuccess) {
       navigation.navigate('PaymentFinish');
-      PushNotification.localNotification({
-        channelId: 'transaction',
-        message: `Yeay! payment success for ${detailVehicle.results.brand}`,
-        title: 'Payment Suceess!',
-        soundName: 'default',
-        vibrate: true,
-      });
-    }
+      // PushNotification.localNotification({
+      //   channelId: 'transaction',
+      //   message: `Congrats! Your Payment Successful for ${detailVehicle.results.brand}`,
+      //   title: 'Payment Success',
+      //   soundName: 'default',
+      //   vibrate: true,
+      // });
+    // }
   }, [addHistoryState.isSuccess, detailVehicle.results.brand, navigation]);
 
   const handleSubmit = () => {
@@ -89,13 +89,13 @@ const Payment3 = ({navigation}) => {
           <Text>Insert your payment code while you transfer booking order</Text>
           <Text>Pay before:</Text>
           <Text fontSize={'2xl'} py="5" color="red.700" bold>
-            23:59:50
+            23:59:59
           </Text>
           <Text fontSize="md" color="gray.500" bold>
             Bank account information:
           </Text>
           <Text fontSize={'2xl'} py="5" bold>
-            0290-9023-342-9
+            0123-4567-89-0
           </Text>
           <Text fontSize="md" color="gray.500" bold>
             {detailVehicle.results.brand} Rental{' '}
