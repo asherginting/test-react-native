@@ -155,7 +155,7 @@ const Order = ({navigation}) => {
 
   const gotoReservation = () => {
     dispatch(detailOrder(count, date, endDate));
-    navigation.navigate('PaymentForm');
+    navigation.navigate('Payment');
   };
   const handleVerify = () => {
     dispatch({type: 'AUTH_LOGOUT'});

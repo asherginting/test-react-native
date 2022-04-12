@@ -35,7 +35,7 @@ const Favorite = ({navigation}) => {
     <Box p="5">
       <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
         <EntypoIcon name="chevron-left" color="black" size={39} />
-        <Text fontSize={'3xl'} pl="2" bold>
+        <Text fontSize={'2xl'} pl="2" bold>
           Your Favorite
         </Text>
       </TouchableOpacity>
@@ -98,7 +98,7 @@ const Favorite = ({navigation}) => {
                 <TouchableOpacity
                   style={styles.badgeDelete}
                   onPress={() => handleDelete(item.idVehicle)}>
-                  <AntIcon name="heart" color={'#49BEB7'} size={30} />
+                  <AntIcon name="heart" color={'red'} size={30} />
                 </TouchableOpacity>
               </Box>
             )}
@@ -106,7 +106,7 @@ const Favorite = ({navigation}) => {
         ) : (
           <Box my="20">
             <Text textAlign={'center'} fontSize="2xl" bold>
-              Your Favorite is Empty
+              Favorite
             </Text>
           </Box>
         )}
