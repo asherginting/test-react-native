@@ -1,21 +1,69 @@
 import {View, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Box, Text} from 'native-base';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Stepper from '../components/Stepper';
 import Button from '../components/Button';
 import priceFormat from '../helper/priceFormat';
+import timer from '../helper/timer';
+import moment from 'moment';
+import {addHistory} from '../redux/actions/history';
+import PushNotification from 'react-native-push-notification';
 
 const Payment3 = ({navigation}) => {
-  const dataOrder = {
-    qty: 1,
-    name: 'Toyota Avanza',
-    perpayment: 'no tax',
-    days: 1,
-    startDate: 'April 4 2022',
-    endDate: 'April 5 2022',
-    price: 300000,
+  const dispatch = useDispatch();
+
+  const {
+    transactionCode,
+    detailOrder,
+    addHistory: addHistoryState,
+    auth,
+    detailVehicle,
+    profile,
+  } = useSelector(state => state);
+  const endDate = moment(
+    moment(detailOrder.startDate).add(detailOrder.totalDay, 'days'),
+  ).format('MMM DD YYYY');
+  const rendEndDate = moment(
+    moment(detailOrder.startDate).add(detailOrder.totalDay, 'days'),
+  ).format('YYYY-MM-DD');
+  // eslint-disable-next-line prettier/prettier
+  const totalPrice = detailVehicle.results.price * detailOrder.totalDay * detailOrder.qty;
+
+  useEffect(() => {
+    dispatch({
+      type: 'CLEAR_ADD_HISTORY',
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    // if (addHistoryState.isSuccess) {
+      navigation.navigate('PaymentFinish');
+      // PushNotification.localNotification({
+      //   channelId: 'transaction',
+      //   message: `Congrats! Your Payment Successful for ${detailVehicle.results.brand}`,
+      //   title: 'Payment Success',
+      //   soundName: 'default',
+      //   vibrate: true,
+      // });
+    // }
+  }, [addHistoryState.isSuccess, detailVehicle.results.brand, navigation]);
+
+  const handleSubmit = () => {
+    dispatch(
+      addHistory(
+        profile.results.idUser,
+        detailVehicle.results.idVehicle,
+        moment(detailOrder.startDate).format('YYYY-MM-DD'),
+        rendEndDate,
+        totalPrice,
+        auth.token,
+      ),
+    );
   };
+
   return (
     <Box p="5">
       <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
@@ -36,10 +84,10 @@ const Payment3 = ({navigation}) => {
             Payment Code:
           </Text>
           <Text py="4" fontSize={'4xl'} bold>
-          90887620
+            {transactionCode.paymentCode}
           </Text>
-          <Text fontSize={12}>Insert your payment code while you transfer booking order</Text>
-          <Text fontSize={12}>Pay before:</Text>
+          <Text>Insert your payment code while you transfer booking order</Text>
+          <Text>Pay before:</Text>
           <Text fontSize={'2xl'} py="5" color="red.700" bold>
             23:59:59
           </Text>
@@ -47,21 +95,24 @@ const Payment3 = ({navigation}) => {
             Bank account information:
           </Text>
           <Text fontSize={'2xl'} py="5" bold>
-          0290-90203-345-2
+            0123-4567-89-0
           </Text>
           <Text fontSize="md" color="gray.500" bold>
-            Go - Rental
+            {detailVehicle.results.brand} Rental{' '}
+            {detailVehicle.results.location}
           </Text>
           <Box py="5" style={styles.borderBtm} />
           <Text fontSize={'md'} pt="5" bold>
             Booking code:{' '}
             <Text color="success.700" fontSize="lg">
-              VSP901222
+              {transactionCode.bookingCode}
             </Text>
           </Text>
-          <Text>Use your booking code to pick your cars</Text>
+          <Text>
+            Use your booking code to pick your {detailVehicle.results.brand}
+          </Text>
           <Box py="5">
-            <Button color={'primary'}>
+            <Button fontSize={15} color={'primary'}>
               Copy payment & Booking Code
             </Button>
           </Box>
@@ -69,29 +120,31 @@ const Payment3 = ({navigation}) => {
         <Box>
           <Text fontSize={'lg'}>Order Details:</Text>
           <Text fontSize={'lg'}>
-            {dataOrder.qty} {dataOrder.name}
+            {detailOrder.qty} {detailVehicle.results.brand}
           </Text>
           <Text fontSize={'lg'}>Prepayment (no tax)</Text>
           <Text fontSize={'lg'}>
-            {dataOrder.days} {dataOrder.days > 1 ? 'Days' : 'Day'}
+            {detailOrder.totalDay} {detailOrder.totalDay > 1 ? 'Days' : 'Day'}
           </Text>
           <Text fontSize={'lg'}>Order Details:</Text>
           <Text fontSize={'lg'}>
-            {dataOrder.startDate} to {dataOrder.endDate}
+            {moment(detailOrder.startDate).format('MMM DD YYYY')} to {endDate}
           </Text>
           <Box py="5" style={styles.borderBtm} />
         </Box>
         <Box py="5" flexDirection={'row'} justifyContent="space-between">
           <Text fontSize={'3xl'} bold>
-            {priceFormat(dataOrder.price * dataOrder.days * dataOrder.qty)}
+            {priceFormat(
+              detailVehicle.results.price *
+                detailOrder.totalDay *
+                detailOrder.qty,
+            )}
           </Text>
           <TouchableOpacity>
-            <EntypoIcon name="info-with-circle" size={36} color="#d2dae2" />
+            <EntypoIcon name="info-with-circle" size={40} color="#d2dae2" />
           </TouchableOpacity>
         </Box>
-        <Button
-          color="primary"
-          onPress={() => navigation.navigate('PaymentFinish')}>
+        <Button color="primary" onPress={handleSubmit}>
           Finish Payment
         </Button>
         <Box mb={'20'} />

@@ -1,11 +1,14 @@
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
+import {Text, Box} from 'native-base';
 
 const Chat = () => {
   return (
-    <View>
-      <Text>Chat</Text>
-    </View>
+    <Box p="4" my="10">
+      <Text fontSize={'3xl'} textAlign="center" bold>
+        Chat
+      </Text>
+    </Box>  
   );
 };
 

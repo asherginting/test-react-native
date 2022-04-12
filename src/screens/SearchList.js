@@ -5,123 +5,125 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import {Box, Center} from 'native-base';
 import React, {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {Text} from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
+import FaIcon from 'react-native-vector-icons/FontAwesome';
 import VehicleList from '../components/VehicleList';
+import {getFilter} from '../redux/actions/vehicles';
+import {myOrder} from '../redux/actions/transaction';
 import Button from '../components/Button';
 
-const SearchList = () => {
-  const listVehicles = [
-    {
-      name: 'Vespa Matic',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/beat.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Jupiter',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/satriafu.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Honda Supra',
-      seet: 2,
-      stock: 2,
-      price: 20000,
-      image: require('../assets/img/beat.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Ymah KLX',
-      seet: 2,
-      stock: 1,
-      price: 20000,
-      image: require('../assets/img/avanza.jpeg'),
-      rating: 4,
-    },
-    {
-      name: 'Monkey',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/satriafu.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Vespa',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/beat.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Matic',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/beat.jpg'),
-      rating: 4,
-    },
-    {
-      name: 'Matic',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/avanza.jpeg'),
-      rating: 4,
-    },
-    {
-      name: 'Vespa Matic',
-      seet: 2,
-      stock: 3,
-      price: 20000,
-      image: require('../assets/img/satriafu.jpg'),
-      rating: 4,
-    },
-  ];
-
+const SearchList = ({navigation}) => {
   const [filter, setFilter] = useState(true);
+  const [key, setKey] = useState();
+
+  const dispatch = useDispatch();
+
+  const {filterVehicle} = useSelector(state => state);
 
   const showFilter = () => {
     setFilter(!filter);
   };
 
+  const handleSearch = () => {
+    const dataFilter = {search: key};
+    dispatch(getFilter(dataFilter));
+  };
+
+  const handleOrder = id => {
+    dispatch(myOrder(id));
+    navigation.navigate('Order');
+  };
+
+  const nextPage = () => {
+    const splitKeyword = filterVehicle.keywoard.split('-');
+    // console.log(filterVehicle.keywoard);
+    // console.log(splitKeyword);
+    console.log(filterVehicle.dataFilter);
+    console.log(filterVehicle.pageInfo.currentPage);
+    dispatch(
+      getFilter(
+        filterVehicle.dataFilter,
+        filterVehicle.pageInfo.currentPage + 1,
+      ),
+    );
+  };
+
   return (
-    <View>
-      <View style={styles.search}>
+    <View style={styles.mainWrapper}>
+      {/* <View style={styles.search}>
         <TextInput
           placeholder="Motorbike-Sleman-January"
           placeholderTextColor="black"
           style={styles.input}
         />
         <Icon name="caretdown" size={15} />
+      </View> */}
+      <View style={styles.form}>
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#fff"
+          placeholder={filterVehicle.keywoard}
+          onChangeText={setKey}
+          defaultValue={key}
+        />
+        <TouchableOpacity style={styles.iconSearchWrap} onPress={handleSearch}>
+          <FaIcon name="search" size={20} style={styles.searchIcon} />
+        </TouchableOpacity>
       </View>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.filter} onPress={showFilter}>
+        <TouchableOpacity
+          style={styles.filter}
+          onPress={() => navigation.navigate('Filter')}>
           <Icon name="filter" size={20} />
           <Text>Filter Search</Text>
         </TouchableOpacity>
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
-          {listVehicles.map((data, index) => (
-            <VehicleList
-              image={data.image}
-              name={data.name}
-              seet={data.seet}
-              stock={data.stock}
-              price={data.price}
-              key={index}
-            />
+          {filterVehicle.results.map((data, index) => (
+            <TouchableOpacity
+              onPress={() => handleOrder(data.idVehicle)}
+              key={index}>
+              <VehicleList
+                image={
+                  data.image
+                    ? {
+                        // eslint-disable-next-line prettier/prettier
+                        uri: data.image.replace(/localhost/g, '192.168.247.222'),
+                      }
+                    : require('../assets/img/no-image.jpg')
+                }
+                name={data.brand}
+                seet={data.capacity}
+                stock={data.qty}
+                price={data.price}
+              />
+            </TouchableOpacity>
           ))}
+          {!filterVehicle.isLoading && filterVehicle.pageInfo.next && (
+            <Box>
+              <Button color="primary" onPress={nextPage}>
+                Load More
+              </Button>
+            </Box>
+          )}
+          {!filterVehicle.isLoading && filterVehicle.results.length === 0 && (
+            <Center>
+              <Box
+                my="20"
+                justifyContent={'center'}
+                alignItems="center"
+                style={styles.alert}>
+                <Text style={styles.textAlert}>
+                Can't find any Vehicle
+                </Text>
+              </Box>
+            </Center>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -129,9 +131,12 @@ const SearchList = () => {
 };
 
 const styles = StyleSheet.create({
+  mainWrapper: {
+    marginBottom: 120,
+  },
   container: {
     padding: 20,
-    marginBottom: 50,
+    marginBottom: 140,
   },
   search: {
     flexDirection: 'row',
@@ -146,6 +151,36 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: 10,
+  },
+  form: {
+    padding: 20,
+    justifyContent: 'center',
+    // marginTop: 10,
+    position: 'relative',
+  },
+  input: {
+    height: 60,
+    color: '#fff',
+    backgroundColor: 'rgba(34, 47, 62,0.3)',
+    borderRadius: 10,
+    fontSize: 20,
+    paddingLeft: 15,
+    paddingRight: 0,
+  },
+  iconSearchWrap: {
+    position: 'absolute',
+    right: 40,
+    height: '100%',
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  alert: {},
+  textAlert: {
+    paddingVertical: 20,
+    textAlign: 'center',
+    lineHeight: 30,
+    fontSize: 20,
   },
 });
 

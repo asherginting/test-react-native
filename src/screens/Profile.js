@@ -1,9 +1,10 @@
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Image, Text} from 'native-base';
+import {Box, Image, Text} from 'native-base';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import Button from '../components/Button';
+import {goToVerify} from '../redux/actions/verify';
 
 const Profile = ({navigation}) => {
   const dispatch = useDispatch();
@@ -13,11 +14,15 @@ const Profile = ({navigation}) => {
       type: 'AUTH_LOGOUT',
     });
   };
-
+  const handleVerify = () => {
+    dispatch({type: 'AUTH_LOGOUT'});
+    dispatch(goToVerify);
+    // navigation.navigate('Verify');
+  };
   return (
     <View style={styles.main}>
       <View style={styles.header}>
-      <Image
+        <Image
           size={69}
           resizeMode={'contain'}
           borderRadius={200}
@@ -26,40 +31,60 @@ const Profile = ({navigation}) => {
               ? {
                   uri: profile.results.image.replace(
                     /localhost/g,
-                    'localhost',
+                    '192.168.247.222',
                   ),
                 }
               : require('../assets/img/no-pp.jpg')
           }
           alt="Photo profile"
         />
-        <Text bold style={styles.name}>
+        <Text bold fontSize="2xl" style={styles.name}>
           {profile.results.name || profile.results.username}
         </Text>
       </View>
       <View style={styles.container}>
         <View>
-          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Favorite')}>
-            <Text fontSize="xl">Your favourites</Text>
-            <FaIcon name="chevron-right" size={18} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Faq')}>
-            <Text fontSize="xl">FAQ</Text>
-            <FaIcon name="chevron-right" size={18} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.linkItem} onPress={() => navigation.navigate('Help')}>
-            <Text fontSize="xl">Help</Text>
-            <FaIcon name="chevron-right" size={18} />
-          </TouchableOpacity>
-          <TouchableOpacity
+          {profile.results?.confirm !== '0' && (
+            <TouchableOpacity
+              style={styles.linkItem}
+              onPress={() => navigation.navigate('Favorite')}>
+              <Text fontSize="xl">Your Favorites</Text>
+              <FaIcon name="chevron-right" size={20} />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity 
             style={styles.linkItem}
-            onPress={() => navigation.navigate('UpdateProfile')}>
-            <Text fontSize="xl">Update profile</Text>
-            <FaIcon name="chevron-right" size={18} />
+            onPress={() => navigation.navigate('Faq')}>
+            <Text fontSize="xl">FAQ</Text>
+            <FaIcon name="chevron-right" size={20} />
           </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.linkItem}
+            onPress={() => navigation.navigate('Help')}>
+            <Text fontSize="xl">Help</Text>
+            <FaIcon name="chevron-right" size={20} />
+          </TouchableOpacity>
+          {profile.results?.confirm !== '0' && (
+            <TouchableOpacity
+              style={styles.linkItem}
+              onPress={() => navigation.navigate('UpdateProfile')}>
+              <Text fontSize="xl">Update Profile</Text>
+              <FaIcon name="chevron-right" size={20} />
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.btnWrapper}>
-          <Button color="primary" onPress={handleLogout}>LOGOUT</Button>
+          {profile.results?.confirm === '0' && (
+            <Box mb="7">
+              <Text mt="5" mb="2" bold textAlign={"center"}>
+              Please verify your account first!
+              </Text>
+              <Text color="#0085DF" textAlign={"center"} onPress={handleVerify}>Click Here</Text>
+            </Box>
+          )}
+          <Button color="primary" onPress={handleLogout}>
+            LOGOUT
+          </Button>
         </View>
       </View>
     </View>
@@ -72,7 +97,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    padding: 20,
+    padding: 30,
     flexDirection: 'column',
     justifyContent: 'space-between',
     height: '80%',
@@ -86,10 +111,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   name: {
-    marginLeft: 28,
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#393939',
+    marginLeft: 30,
   },
   list: {
     paddingVertical: 20,
@@ -106,3 +128,4 @@ const styles = StyleSheet.create({
 });
 
 export default Profile;
+

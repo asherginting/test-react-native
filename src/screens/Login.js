@@ -56,7 +56,7 @@ const Login = ({navigation}) => {
               <Button
                 color="primary"
                 onPress={handleLogin}>
-                Login
+                LOGIN
               </Button>
             </View>
             <View style={styles.signupContain}>
