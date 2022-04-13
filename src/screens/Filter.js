@@ -110,7 +110,7 @@ const Filter = ({navigation}) => {
               {/* <Picker.Item label={'data'} value={'data'} color="gray" /> */}
             </Picker>
           </View>
-          <View style={styles.select}>
+          {/* <View style={styles.select}>
             <Text color={'black'} fontSize={'xl'}>
               Star Rating
             </Text>
@@ -130,7 +130,7 @@ const Filter = ({navigation}) => {
                 />
               ))}
             </Picker>
-          </View>
+          </View> */}
           <View style={styles.select}>
             <Text color={'black'} fontSize={'xl'}>
               Sort By
@@ -176,7 +176,7 @@ const Filter = ({navigation}) => {
               {/* <AntIcon name="caretdown" size={10} style={styles.iconInput} /> */}
             </View>
           </View>
-          <View style={styles.select}>
+          {/* <View style={styles.select}>
             <Text color={'black'} fontSize={'xl'}>
               Date
             </Text>
@@ -207,7 +207,7 @@ const Filter = ({navigation}) => {
               />
               <AntIcon name="caretdown" size={10} style={styles.iconInput} />
             </View>
-          </View>
+          </View> */}
           <View style={styles.select}>
             <Text color={'black'} fontSize={'xl'}>
               Type
@@ -229,7 +229,7 @@ const Filter = ({navigation}) => {
               ))}
             </Picker>
           </View>
-          <SwitchSection
+          {/* <SwitchSection
             title="Prepayment"
             state={isPrepayment}
             setState={setIsPrepayment}
@@ -239,7 +239,7 @@ const Filter = ({navigation}) => {
             title="Only show available"
             state={isAvailable}
             setState={setIsAvailable}
-          />
+          /> */}
         </View>
         <View style={styles.btnWrapper}>
           <Button color="primary" onPress={handleFilter}>

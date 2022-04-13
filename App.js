@@ -33,13 +33,13 @@ const Main = () => {
 const {store, persistor} = reduxStore();
 
 const App = () => {
-  const getToken = async() => {
-    const token = await messaging().getToken()
-    console.log(token);
-  }
-  useEffect(()=> {
-    getToken()
-  }, []);
+  // const getToken = async() => {
+  //   const token = await messaging().getToken()
+  //   console.log(token);
+  // }
+  // useEffect(()=> {
+  //   getToken()
+  // }, []);
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

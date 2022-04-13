@@ -39,16 +39,9 @@ const Payment3 = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    // if (addHistoryState.isSuccess) {
-      navigation.navigate('PaymentFinish');
-      // PushNotification.localNotification({
-      //   channelId: 'transaction',
-      //   message: `Congrats! Your Payment Successful for ${detailVehicle.results.brand}`,
-      //   title: 'Payment Success',
-      //   soundName: 'default',
-      //   vibrate: true,
-      // });
-    // }
+    if (addHistoryState.isSuccess) {
+      
+    }
   }, [addHistoryState.isSuccess, detailVehicle.results.brand, navigation]);
 
   const handleSubmit = () => {
@@ -62,6 +55,14 @@ const Payment3 = ({navigation}) => {
         auth.token,
       ),
     );
+    PushNotification.localNotification({
+      channelId: 'transaction',
+      message: `Your Payment Successful for ${detailVehicle.results.brand}`,
+      title: 'Payment Success',
+      soundName: 'default',
+      vibrate: true,
+    });
+    navigation.navigate('PaymentFinish');
   };
 
   return (
